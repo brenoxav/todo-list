@@ -11,8 +11,20 @@ const todoModule = (function() {
   const createTodo = (todoObj) => {
     return new Todo(todoObj);
   }
+
+  
+
+  const removeFromProject = (todoObjIndex, projectObj) => {
+    projectObj.splice(todoObjIndex, 1);
+  }
+
+  const addToProject = (todoObj, projectObj) => {
+    projectObj.listOfTodos.push(todoObj);
+  }
+
   return {
-    createTodo
+    createTodo,
+    addToProject
   }
 })();
 

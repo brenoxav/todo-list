@@ -46,6 +46,10 @@ table {
 }
 /* CSS RESET END */
 
+.main {
+  display: flex;
+  flex-wrap: wrap;
+}
 
 .header {
   width: 100%;

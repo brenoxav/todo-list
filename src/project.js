@@ -1,7 +1,7 @@
 class Project {
-  constructor({name, list}){
+  constructor({name, listOfTodos}){
     this.name = name;
-    this.list = list;
+    this.listOfTodos = listOfTodos;
   }
 }
 const projectModule = (() =>{
