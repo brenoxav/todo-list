@@ -1,16 +1,18 @@
+import projectModule from './project';
+
+const projectList = projectModule.getProjectList();
+
 const render = function() {
   //TESTING TODO LIST RENDER
-  let allTodos = [];
-
-  let todoList = [
+  let ungroupedTodos = [
     {  
-      title: 'push to github',
+      title: 'pullto github',
       description: 'upload the latest changes on github',
       dueDate: '1-4-2021',
       priority: 'high'
     },
     {  
-      title: 'readme',
+      title: 'docs',
       description: 'update readme on github',
       dueDate: '2-4-2021',
       priority: 'mid'
@@ -20,38 +22,6 @@ const render = function() {
       description: 'check for linter errors',
       dueDate: '3-4-2021',
       priority: 'low'
-    }
-  ];
-
-  let projectList = [
-    {  
-      name: 'work',
-      listOfTodos:[
-        {  
-          title: 'linters',
-          description: 'check for linter errors',
-          dueDate: '3-4-2021',
-          priority: 'low'
-        },
-        {  
-          title: 'tests',
-          description: 'check for test errors',
-          dueDate: '3-4-2021',
-          priority: 'high'
-        }
-      ]
-
-    },
-    {  
-      name: 'personal',
-      listOfTodos: [
-        {  
-          title: 'readme',
-          description: 'update readme on github',
-          dueDate: '2-4-2021',
-          priority: 'mid'
-        },
-      ]
     }
   ];
 
@@ -71,25 +41,46 @@ const render = function() {
   
 
   //LIST TODOS
-  const renderTodoList = (todoList) =>{
+  const clearTodosWrapper = () => {
     todoListWrapper.innerHTML = '';
-    todoList.forEach((todo, index) => {
+  }
 
+  const renderTodoList = (todoList, projectName='') =>{
+
+    todoList.forEach((todo, index) => {
       todoListWrapper.innerHTML += `
       <div class="todo-item priority-${todo.priority}" data-index=${index}>
         <input type="checkbox" class="todo-checkbox">
         <span class="todo-title">${todo.title}</span>
         <span class="todo-due-date">${todo.dueDate}</span>
+        <span class="todo-project">${projectName}</span>
         <span class="todo-actions-wrapper">
           <span class="todo-edit">edit</span>
           <span class="todo-delete">delete</span>
         </span>
       </div>
       `
-
     });
   }
   
+
+  // LIST ALL TODOS
+  const allTodosTab = document.createElement('div');
+  allTodosTab.classList.add('project-tab');
+  allTodosTab.textContent = 'All Todo';
+
+  allTodosTab.addEventListener('click', ()=>{
+    clearTodosWrapper();
+    renderTodoList(ungroupedTodos);
+
+    projectList.forEach((project)=>{
+      renderTodoList(project.listOfTodos, project.name);
+    });
+  })
+
+  sideBar.appendChild(allTodosTab);
+  
+
   //LIST PROJECTS
   projectList.forEach((project, index) => {
     const projectTab = document.createElement('div');
@@ -98,14 +89,37 @@ const render = function() {
     projectTab.textContent = project.name;
     
     projectTab.addEventListener('click', ()=>{
+      clearTodosWrapper();
       renderTodoList(project.listOfTodos)
     })
 
     sideBar.appendChild(projectTab);
 
-    allTodos.push(project.listOfTodos);
   });
+  // NEW FIELD
+  const renderInputField = (parentWrapper) =>{
+    const inputField = document.createElement('input');
+    const saveBtn = document.createElement('button');
+    saveBtn.textContent = 'save';
+    saveBtn.addEventListener('click', ()=>{
+      projectModule.createProject(inputField.value);
+    });
 
+    parentWrapper.appendChild(inputField);
+    parentWrapper.appendChild(saveBtn);
+  }
+
+  // ADD PROJECT BUTTON
+
+  const addProjectBtn = document.createElement('button');
+  addProjectBtn.classList.add('add-project-btn');
+  addProjectBtn.textContent = 'ADD +';
+  addProjectBtn.addEventListener('click',()=>{
+    renderInputField(sideBar);
+  })
+  sideBar.appendChild(addProjectBtn);
+
+  
   main.appendChild(sideBar);
   main.appendChild(todoListWrapper);
 }

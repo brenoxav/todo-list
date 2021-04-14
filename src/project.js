@@ -1,34 +1,64 @@
 class Project {
-  constructor({name, listOfTodos}){
+  constructor({name}){
     this.name = name;
-    this.listOfTodos = listOfTodos;
+    this.listOfTodos = [];
   }
 }
 const projectModule = (() =>{
 
-  let myProjects = [];
+  let projectList = [
+    {  
+      name: 'work',
+      listOfTodos:[
+        {  
+          title: 'linters',
+          description: 'check for linter errors',
+          dueDate: '3-4-2021',
+          priority: 'low'
+        },
+        {  
+          title: 'tests',
+          description: 'check for test errors',
+          dueDate: '3-4-2021',
+          priority: 'high'
+        }
+      ]
 
-  const createProject = (projectObj) => {
-    myProjects.push(new Project(projectObj));
+    },
+    {  
+      name: 'personal',
+      listOfTodos: [
+        {  
+          title: 'readme',
+          description: 'update readme on github',
+          dueDate: '2-4-2021',
+          priority: 'mid'
+        },
+      ]
+    }
+  ];
+
+  const createProject = (projectName) => {
+    projectList.push(new Project(projectName));
   }
   
   const removeProject = (projectIndex) => {
-    myProjects.splice(projectIndex, 1);
+    projectList.splice(projectIndex, 1);
   }
   
   const updateProject = (projectObj, newProjectObj) => {
     projectObj = newProjectObj;
   }
 
-  const getListOfProjects = ()=>{
-    return myProjects;
+  const getProjectList = ()=>{
+    return projectList;
   }
 
   return {
     createProject,
     removeProject,
     updateProject,
-    getListOfProjects
+    getProjectList
   }
 })();
 
