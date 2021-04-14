@@ -32,6 +32,12 @@ const render = function() {
           description: 'check for linter errors',
           dueDate: '3-4-2021',
           priority: 'low'
+        },
+        {  
+          title: 'tests',
+          description: 'check for test errors',
+          dueDate: '3-4-2021',
+          priority: 'high'
         }
       ]
 
@@ -63,19 +69,28 @@ const render = function() {
   
   main.appendChild(header);
   
+
+  //LIST TODOS
   const renderTodoList = (todoList) =>{
     todoListWrapper.innerHTML = '';
     todoList.forEach((todo, index) => {
-      const todoItem = document.createElement('div');
-      todoItem.setAttribute('data-index', index);
-      todoItem.classList.add('todo-item');
-      todoItem.textContent = todo.title;
-      todoListWrapper.appendChild(todoItem);
+
+      todoListWrapper.innerHTML += `
+      <div class="todo-item priority-${todo.priority}" data-index=${index}>
+        <input type="checkbox" class="todo-checkbox">
+        <span class="todo-title">${todo.title}</span>
+        <span class="todo-due-date">${todo.dueDate}</span>
+        <span class="todo-actions-wrapper">
+          <span class="todo-edit">edit</span>
+          <span class="todo-delete">delete</span>
+        </span>
+      </div>
+      `
+
     });
-    
   }
   
-
+  //LIST PROJECTS
   projectList.forEach((project, index) => {
     const projectTab = document.createElement('div');
     projectTab.setAttribute('data-index', index);
@@ -85,7 +100,6 @@ const render = function() {
     projectTab.addEventListener('click', ()=>{
       renderTodoList(project.listOfTodos)
     })
-
 
     sideBar.appendChild(projectTab);
 
