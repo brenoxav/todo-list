@@ -1,5 +1,6 @@
 import './assets/css/style.css';
 import projectModule from './project';
+import render from './render';
 
 
 const main = document.querySelector('main');
@@ -14,3 +15,5 @@ const project = {
 projectModule.createProject(project);
 
 console.log(projectModule.getListOfProjects);
+
+render();
