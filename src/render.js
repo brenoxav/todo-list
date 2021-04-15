@@ -1,61 +1,123 @@
+import Project from './project';
 import projectModule from './project';
 import todoModule from './todo';
 
 
-const projectList = projectModule.getProjectList();
+//DATA////////////////////////////////////////////////////////////////////////
+//TEST DATA
+let exampleTodos = [
+  {  
+    title: 'pullto github',
+    description: 'upload the latest changes on github',
+    dueDate: '1-4-2021',
+    priority: 'high'
+  },
+  {  
+    title: 'docs',
+    description: 'update readme on github',
+    dueDate: '2-4-2021',
+    priority: 'mid'
+  },
+  {  
+    title: 'linters',
+    description: 'check for linter errors',
+    dueDate: '3-4-2021',
+    priority: 'low'
+  }
+];
 
+let projects = [];
+
+const defaultProject = new Project('default', exampleTodos);
+
+//RENDER//////////////////////////////////////////////////////////////////////
 const render = function() {
-  //TESTING TODO LIST RENDER
-  let ungroupedTodos = [
-    {  
-      title: 'pullto github',
-      description: 'upload the latest changes on github',
-      dueDate: '1-4-2021',
-      priority: 'high'
-    },
-    {  
-      title: 'docs',
-      description: 'update readme on github',
-      dueDate: '2-4-2021',
-      priority: 'mid'
-    },
-    {  
-      title: 'linters',
-      description: 'check for linter errors',
-      dueDate: '3-4-2021',
-      priority: 'low'
-    }
-  ];
-
+  // Create base elements
   const main = document.querySelector('main');
   main.classList.add('main');
   
-  const header = document.createElement('div');
-  header.classList.add('header')
+  const header = document.createElement('header');
+  header.classList.add('header');
   
   const sideBar = document.createElement('div');
   sideBar.classList.add('side-bar');
   
-  const todoListWrapper = document.createElement('div');
-  todoListWrapper.classList.add('todo-list-wrapper');
+  const todoList = document.createElement('div');
+  todoList.classList.add('todo-list');
   
   main.appendChild(header);
   
+  // Clear todo list elements
+  // const clearTodosWrapper = () => {
+  //   todoList.innerHTML = '';
+  // }
 
-  //LIST TODOS
-  const clearTodosWrapper = () => {
-    todoListWrapper.innerHTML = '';
-  }
+// RENDER SIDEBAR
+const renderSideBar = () => {
+  sideBar.innerHTML = '';
+  // const allTodosTab = document.createElement('div');
+  // allTodosTab.classList.add('project-tab');
+  // allTodosTab.textContent = 'All Todo';
 
-  const renderTodoList = (todoList, projectName='') =>{
+  // allTodosTab.addEventListener('click', ()=>{
+  //   clearTodosWrapper();
+  //   renderTodosFromProject(ungroupedTodos);
 
-    todoList.forEach((todo, index) => {
-      todoListWrapper.innerHTML += `
+  //   projects.forEach((project)=>{
+  //     renderTodosFromProject(project.listOfTodos, project.name);
+  //   });
+
+  //   renderAddTodoBtn(ungroupedTodos);
+  // });
+
+  // sideBar.appendChild(allTodosTab);
+
+  //RENDER EACH PROJECT NAME IN SIDEBAR
+  projects.forEach((project, index) => {
+    const projectBtn = document.createElement('button');
+    projectBtn.outerHTML = `
+      <button data-index=${index} class="project-btn">${project.name}</button>
+    `;
+
+    // const projectBtn = document.createElement('div');
+    // projectBtn.setAttribute('data-index', index);
+    // projectBtn.classList.add('project-tab');
+    // projectBtn.textContent = project.name;
+    
+    projectBtn.addEventListener('click', () => {
+      //clearTodosWrapper();
+      renderTodosFromProject(project);
+    })
+    sideBar.appendChild(projectBtn);
+  });
+  
+  // ADD PROJECT BUTTON
+  const addProjectBtn = document.createElement('button');
+  addProjectBtn.outerHTML = `
+    <button class="add-project-btn"> + </button>
+  `;
+
+  addProjectBtn.addEventListener('click', () => { 
+    newProjectForm.classList.toggle('hidden');
+  });
+
+  const newProjectForm = renderNewProjectForm();
+  newProjectForm.classList.add('hidden');
+  sideBar.appendChild(newProjectForm);
+
+  sideBar.appendChild(addProjectBtn);
+  
+};
+
+  // RENDER TODO LIST FROM PROJECT
+  const renderTodosFromProject = (project) =>{
+    todoList.innerHTML = '';
+    project.todos.forEach((todo, index) => {
+      todoList.innerHTML += `
       <div class="todo-item priority-${todo.priority}" data-index=${index}>
         <input type="checkbox" class="todo-checkbox">
         <span class="todo-title">${todo.title}</span>
         <span class="todo-due-date">${todo.dueDate}</span>
-        <span class="todo-project">${projectName}</span>
         <span class="todo-actions-wrapper">
           <span class="todo-edit">edit</span>
           <span class="todo-delete">delete</span>
@@ -63,11 +125,11 @@ const render = function() {
       </div>
       `
     });
-
+    renderAddTodoBtn(project);
   }
   
   // new todo form
-  const renderNewTodoBtn = (todoList, projectName='') =>{ 
+  const renderAddTodoBtn = (todoList, projectName='') =>{ 
     const newTodoForm = document.createElement('div');
     newTodoForm.classList.add('new-todo-wrapper');
 
@@ -97,7 +159,7 @@ const render = function() {
 
       todoModule.createTodo(todoObj, todoList);
       clearTodosWrapper();
-      renderTodoList(todoList, projectName);
+      renderTodosFromProject(todoList, projectName);
     });
 
     newTodoForm.appendChild(titleField);
@@ -114,12 +176,12 @@ const render = function() {
     addTodoBtn.textContent = ' + ';
     
     newTodoForm.classList.add('hidden');
-    todoListWrapper.appendChild(newTodoForm);
+    todoList.appendChild(newTodoForm);
 
     addTodoBtn.addEventListener('click',()=>{ 
       newTodoForm.classList.toggle('hidden');
     })
-    todoListWrapper.appendChild(addTodoBtn);
+    todoList.appendChild(addTodoBtn);
   }
 
   // NEW PROJECT Form
@@ -143,67 +205,12 @@ const render = function() {
     return newProjectForm;
   }
 
-
-  const renderSideBar= ()=>{
-
-    sideBar.innerHTML = '';
-    // LIST ALL TODOS
-    const allTodosTab = document.createElement('div');
-    allTodosTab.classList.add('project-tab');
-    allTodosTab.textContent = 'All Todo';
-
-    allTodosTab.addEventListener('click', ()=>{
-      clearTodosWrapper();
-      renderTodoList(ungroupedTodos);
-
-      projectList.forEach((project)=>{
-        renderTodoList(project.listOfTodos, project.name);
-      });
-
-      renderNewTodoBtn(ungroupedTodos);
-    });
-
-
-    sideBar.appendChild(allTodosTab);
-
-    //LIST PROJECTS
-    projectList.forEach((project, index) => {
-      const projectTab = document.createElement('div');
-      projectTab.setAttribute('data-index', index);
-      projectTab.classList.add('project-tab');
-      projectTab.textContent = project.name;
-      
-      projectTab.addEventListener('click', ()=>{
-        clearTodosWrapper();
-        renderTodoList(project.listOfTodos);
-        renderNewTodoBtn(project.listOfTodos);
-      })
-
-      sideBar.appendChild(projectTab);
-
-    });
-    
-    // ADD PROJECT BUTTON
-    const addProjectBtn = document.createElement('button');
-    addProjectBtn.classList.add('add-project-btn');
-    addProjectBtn.textContent = ' + ';
-    const newProjectForm = renderNewProjectForm();
-    newProjectForm.classList.add('hidden');
-    sideBar.appendChild(newProjectForm);
-
-    addProjectBtn.addEventListener('click',()=>{ 
-      newProjectForm.classList.toggle('hidden');
-    })
-    sideBar.appendChild(addProjectBtn);
-    
-  };
-
+  
   renderSideBar();
   
   main.appendChild(sideBar);
-  main.appendChild(todoListWrapper);
+  main.appendChild(todoList);
   
 }
-
 
 export default render;

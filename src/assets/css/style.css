@@ -73,7 +73,7 @@ font-family: -apple-system, BlinkMacSystemFont,
   background-color: #eee;
 }
 
-.project-tab {
+.project-btn {
   margin-bottom: 1rem;
   padding: 1rem;
   border-radius: .5rem;
@@ -100,7 +100,7 @@ font-family: -apple-system, BlinkMacSystemFont,
 }
 
 /* TODO LIST */
-.todo-list-wrapper {
+.todo-list {
   flex: 1;
   
   min-height: 100vh;
