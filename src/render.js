@@ -1,4 +1,6 @@
 import projectModule from './project';
+import todoModule from './todo';
+
 
 const projectList = projectModule.getProjectList();
 
@@ -61,44 +63,69 @@ const render = function() {
       </div>
       `
     });
+
   }
   
+  // new todo form
+  const renderNewTodoBtn = (todoList, projectName='') =>{ 
+    const newTodoForm = document.createElement('div');
+    newTodoForm.classList.add('new-todo-wrapper');
 
-  // LIST ALL TODOS
-  const allTodosTab = document.createElement('div');
-  allTodosTab.classList.add('project-tab');
-  allTodosTab.textContent = 'All Todo';
+    const titleField = document.createElement('input');
+    titleField.classList.add('todo-input-title');
 
-  allTodosTab.addEventListener('click', ()=>{
-    clearTodosWrapper();
-    renderTodoList(ungroupedTodos);
+    const descriptionField = document.createElement('input');
+    descriptionField.classList.add('todo-input-description');
 
-    projectList.forEach((project)=>{
-      renderTodoList(project.listOfTodos, project.name);
-    });
-  })
+    const dueDateField = document.createElement('input');
+    dueDateField.classList.add('todo-input-due-date');
+    dueDateField.setAttribute('type', 'date');
 
-  sideBar.appendChild(allTodosTab);
-
-  //LIST PROJECTS
-  projectList.forEach((project, index) => {
-    const projectTab = document.createElement('div');
-    projectTab.setAttribute('data-index', index);
-    projectTab.classList.add('project-tab');
-    projectTab.textContent = project.name;
+    const priorityField = document.createElement('input');
+    priorityField.classList.add('todo-input-due-date');
     
-    projectTab.addEventListener('click', ()=>{
+    const saveBtn = document.createElement('button');
+    saveBtn.classList.add('save-todo-btn');
+    saveBtn.textContent = 'save';
+    saveBtn.addEventListener('click', ()=>{
+      const todoObj = {
+        title: titleField.value,
+        description: descriptionField.value,
+        dueDate: dueDateField.value,
+        priority: priorityField.value
+      };
+
+      todoModule.createTodo(todoObj, todoList);
       clearTodosWrapper();
-      renderTodoList(project.listOfTodos)
+      renderTodoList(todoList, projectName);
+    });
+
+    newTodoForm.appendChild(titleField);
+    newTodoForm.appendChild(descriptionField);
+    newTodoForm.appendChild(dueDateField);
+    newTodoForm.appendChild(priorityField);
+    newTodoForm.appendChild(saveBtn);
+    
+
+    // ADD TODO BUTTON
+
+    const addTodoBtn = document.createElement('button');
+    addTodoBtn.classList.add('add-todo-btn');
+    addTodoBtn.textContent = ' + ';
+    
+    newTodoForm.classList.add('hidden');
+    todoListWrapper.appendChild(newTodoForm);
+
+    addTodoBtn.addEventListener('click',()=>{ 
+      newTodoForm.classList.toggle('hidden');
     })
+    todoListWrapper.appendChild(addTodoBtn);
+  }
 
-    sideBar.appendChild(projectTab);
-
-  });
-  // NEW FIELD
-  const renderInputField = (parentWrapper) =>{
-    const newProjectWrapper = document.createElement('div');
-    newProjectWrapper.classList.add('new-project-wrapper');
+  // NEW PROJECT Form
+  const renderNewProjectForm = () =>{
+    const newProjectForm = document.createElement('div');
+    newProjectForm.classList.add('new-project-wrapper');
     const inputField = document.createElement('input');
     inputField.classList.add('new-project-input');
     
@@ -107,28 +134,76 @@ const render = function() {
     saveBtn.textContent = 'save';
     saveBtn.addEventListener('click', ()=>{
       projectModule.createProject(inputField.value);
+      renderSideBar();
     });
 
-    newProjectWrapper.appendChild(inputField);
-    newProjectWrapper.appendChild(saveBtn);
+    newProjectForm.appendChild(inputField);
+    newProjectForm.appendChild(saveBtn);
 
-    parentWrapper.appendChild(newProjectWrapper);
-    // parentWrapper.appendChild(inputField);
-    // parentWrapper.appendChild(saveBtn);
+    return newProjectForm;
   }
 
-  // ADD PROJECT BUTTON
-  const addProjectBtn = document.createElement('button');
-  addProjectBtn.classList.add('add-project-btn');
-  addProjectBtn.textContent = ' + ';
-  addProjectBtn.addEventListener('click',()=>{
-    renderInputField(sideBar);
-  //  newProjectWrapper.classList.toggle('hidden');
-  })
-  sideBar.appendChild(addProjectBtn);
+
+  const renderSideBar= ()=>{
+
+    sideBar.innerHTML = '';
+    // LIST ALL TODOS
+    const allTodosTab = document.createElement('div');
+    allTodosTab.classList.add('project-tab');
+    allTodosTab.textContent = 'All Todo';
+
+    allTodosTab.addEventListener('click', ()=>{
+      clearTodosWrapper();
+      renderTodoList(ungroupedTodos);
+
+      projectList.forEach((project)=>{
+        renderTodoList(project.listOfTodos, project.name);
+      });
+
+      renderNewTodoBtn(ungroupedTodos);
+    });
+
+
+    sideBar.appendChild(allTodosTab);
+
+    //LIST PROJECTS
+    projectList.forEach((project, index) => {
+      const projectTab = document.createElement('div');
+      projectTab.setAttribute('data-index', index);
+      projectTab.classList.add('project-tab');
+      projectTab.textContent = project.name;
+      
+      projectTab.addEventListener('click', ()=>{
+        clearTodosWrapper();
+        renderTodoList(project.listOfTodos);
+        renderNewTodoBtn(project.listOfTodos);
+      })
+
+      sideBar.appendChild(projectTab);
+
+    });
+    
+    // ADD PROJECT BUTTON
+    const addProjectBtn = document.createElement('button');
+    addProjectBtn.classList.add('add-project-btn');
+    addProjectBtn.textContent = ' + ';
+    const newProjectForm = renderNewProjectForm();
+    newProjectForm.classList.add('hidden');
+    sideBar.appendChild(newProjectForm);
+
+    addProjectBtn.addEventListener('click',()=>{ 
+      newProjectForm.classList.toggle('hidden');
+    })
+    sideBar.appendChild(addProjectBtn);
+    
+  };
+
+  renderSideBar();
   
   main.appendChild(sideBar);
   main.appendChild(todoListWrapper);
+  
 }
+
 
 export default render;

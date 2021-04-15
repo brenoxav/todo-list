@@ -1,5 +1,5 @@
 class Project {
-  constructor({name}){
+  constructor(name){
     this.name = name;
     this.listOfTodos = [];
   }

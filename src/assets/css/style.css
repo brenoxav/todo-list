@@ -149,3 +149,7 @@ font-family: -apple-system, BlinkMacSystemFont,
 .priority-high {
   border-left: 8px solid #f60;
 }
+
+.hidden {
+  display: none;
+}

@@ -1,6 +1,6 @@
 const path = require('path');
 
-module.exports = {
+const config = {
   entry: './src/index.js',
   output: {
     filename: 'main.js',
@@ -18,4 +18,11 @@ module.exports = {
       },
     ],
   },
+};
+
+module.exports = (env, argv) => {
+  if (argv.mode === 'development') {
+    config.devtool = 'inline-source-map';
+  }
+  return config;
 };

@@ -8,8 +8,9 @@ class Todo {
 }
 
 const todoModule = (function() {
-  const createTodo = (todoObj) => {
-    return new Todo(todoObj);
+  const createTodo = (todoObj, todoList) => {
+    const newTodo = new Todo(todoObj);
+    todoList.push(newTodo);
   }
 
   
