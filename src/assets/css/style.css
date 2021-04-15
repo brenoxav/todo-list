@@ -64,6 +64,7 @@ font-family: -apple-system, BlinkMacSystemFont,
   background-color: #aaa;
 }
 
+/* SIDEBAR */
 .side-bar {
   width: 25%;
   min-height: 100vh;
@@ -79,6 +80,26 @@ font-family: -apple-system, BlinkMacSystemFont,
   background-color: #aaa;
 }
 
+.add-project-btn {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  float: right;
+  font-size: 1.5rem;
+}
+
+.new-project-input {
+  width: 100%;
+  margin: 1rem 0;
+  font-size: 1.5rem;
+}
+
+.save-project-btn {
+  float: right;
+  font-size: 1.5rem;
+}
+
+/* TODO LIST */
 .todo-list-wrapper {
   flex: 1;
   

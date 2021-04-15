@@ -79,7 +79,6 @@ const render = function() {
   })
 
   sideBar.appendChild(allTodosTab);
-  
 
   //LIST PROJECTS
   projectList.forEach((project, index) => {
@@ -98,27 +97,35 @@ const render = function() {
   });
   // NEW FIELD
   const renderInputField = (parentWrapper) =>{
+    const newProjectWrapper = document.createElement('div');
+    newProjectWrapper.classList.add('new-project-wrapper');
     const inputField = document.createElement('input');
+    inputField.classList.add('new-project-input');
+    
     const saveBtn = document.createElement('button');
+    saveBtn.classList.add('save-project-btn');
     saveBtn.textContent = 'save';
     saveBtn.addEventListener('click', ()=>{
       projectModule.createProject(inputField.value);
     });
 
-    parentWrapper.appendChild(inputField);
-    parentWrapper.appendChild(saveBtn);
+    newProjectWrapper.appendChild(inputField);
+    newProjectWrapper.appendChild(saveBtn);
+
+    parentWrapper.appendChild(newProjectWrapper);
+    // parentWrapper.appendChild(inputField);
+    // parentWrapper.appendChild(saveBtn);
   }
 
   // ADD PROJECT BUTTON
-
   const addProjectBtn = document.createElement('button');
   addProjectBtn.classList.add('add-project-btn');
-  addProjectBtn.textContent = 'ADD +';
+  addProjectBtn.textContent = ' + ';
   addProjectBtn.addEventListener('click',()=>{
     renderInputField(sideBar);
+  //  newProjectWrapper.classList.toggle('hidden');
   })
   sideBar.appendChild(addProjectBtn);
-
   
   main.appendChild(sideBar);
   main.appendChild(todoListWrapper);
