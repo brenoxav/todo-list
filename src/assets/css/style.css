@@ -61,11 +61,13 @@ font-family: -apple-system, BlinkMacSystemFont,
 .header {
   width: 100%;
   height: 80px;
-  background-color: #aaa;
+  background-color: #08f;
 }
 
 /* SIDEBAR */
 .side-bar {
+  display: flex;
+  flex-direction: column;
   width: 25%;
   min-height: 100vh;
   padding: 2rem;
@@ -74,35 +76,46 @@ font-family: -apple-system, BlinkMacSystemFont,
 }
 
 .project-btn {
+  width: 100%;
   margin-bottom: 1rem;
   padding: 1rem;
-  border-radius: .5rem;
-  background-color: #aaa;
+  /* border-radius: .5rem; */
+  border: none;
+  font-size: 1.5rem;
+  color: #fff;
+  background-color: #08f;
+}
+
+.project-btn:focus {
+  outline: none;
 }
 
 .add-project-btn {
-  width: 2rem;
-  height: 2rem;
-  border-radius: 50%;
-  float: right;
-  font-size: 1.5rem;
+  padding: 1rem;
+  border-radius: 2rem;
+  border: 2px solid #08f;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #08f;
+}
+
+.add-project-btn:focus {
+  outline: none;
 }
 
 .new-project-name {
-  width: 100%;
   margin: 1rem 0;
   font-size: 1.5rem;
 }
 
 .save-project-btn {
   float: right;
-  font-size: 1.5rem;
+  font-size: 1rem;
 }
 
 /* TODO LIST */
 .todo-list {
   flex: 1;
-  
   min-height: 100vh;
   padding: 2rem;
 }
@@ -111,6 +124,7 @@ font-family: -apple-system, BlinkMacSystemFont,
   display: flex;
   align-items: baseline;
   width: 100%;
+  margin-bottom: .5rem;
   padding: 1rem;
   border-bottom: 1px solid #aaa;
   font-size: 1.5rem;
@@ -148,6 +162,39 @@ font-family: -apple-system, BlinkMacSystemFont,
 
 .priority-high {
   border-left: 8px solid #f60;
+}
+
+/* ADD TODO FORM */
+.add-todo-btn {
+  margin: 1rem 0;
+  padding: .5rem 1rem;
+  border: 2px solid #08f;
+  border-radius: 1.5rem;
+  font-size: 1rem;
+  color: #08f;
+  background-color: transparent;
+}
+
+.new-todo-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.new-todo-wrapper * {
+  max-width: 75%;
+  margin: 1rem 0;
+  font-size: 1.5rem;
+  font-family: initial;
+}
+
+.new-todo-title {
+  margin: 1rem 0;
+  font-size: 1.5rem;
+}
+
+
+.new-todo-description {
+
 }
 
 .hidden {

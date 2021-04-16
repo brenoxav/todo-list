@@ -1,7 +1,5 @@
 import Project from './project';
-import projectModule from './project';
 import Todo from './todo';
-import todoModule from './todo';
 
 
 //DATA////////////////////////////////////////////////////////////////////////
@@ -102,8 +100,8 @@ const render = function () {
 
     // ADD PROJECT BUTTON
     const addProjectBtn = document.createElement('button');
-    addProjectBtn.classList.add('project-tab');
-    addProjectBtn.textContent = ' + ';
+    addProjectBtn.classList.add('add-project-btn');
+    addProjectBtn.textContent = 'Add Project';
 
     addProjectBtn.addEventListener('click', () => {
       newProjectForm.classList.toggle('hidden');
@@ -149,12 +147,24 @@ const render = function () {
         </span>
       </div>
       `
+      
     });
+
+    // ADD EVENT LISTNER TO DELETE BTNS
+    const deleteBtns = document.querySelectorAll('.todo-delete-btn');
+      
+    deleteBtns.forEach((btn, btnIndex) => {
+      btn.addEventListener('click', () => {
+        project.deleteTodo(btnIndex);
+        renderTodosContainer(project);
+      });
+    });
+
 
     // ADD TODO BUTTON
     const addTodoBtn = document.createElement('button');
     addTodoBtn.classList.add('add-todo-btn');
-    addTodoBtn.textContent = ' + ';
+    addTodoBtn.textContent = 'Add todo';
 
     addTodoBtn.addEventListener('click', () => {
       newTodoForm.classList.toggle('hidden');
@@ -171,7 +181,7 @@ const render = function () {
     titleField.classList.add('new-todo-title');
     titleField.setAttribute('placeholder', 'Title');
 
-    const descriptionField = document.createElement('input');
+    const descriptionField = document.createElement('textarea');
     descriptionField.classList.add('new-todo-description');
     descriptionField.setAttribute('placeholder', 'Description');
 
@@ -200,40 +210,34 @@ const render = function () {
       };
 
       //CHECK IF FIELD IS EMPTY
-      Object.entries(todoObj).some((field) => {field[1] === ""});
+      const inputIsValid = Object.entries(todoObj).every((field) =>{
+        if (field[1] === ""){
+          alert(`The field ${field[0]} can't be empty!`);
+          return false;
+        }
+        else{
+          return true;
+        }
+        });
 
-      for (const field in todoObj) {
-        if (todoObj[field] === '') {
-          alert(`The field ${field} can't be empty!`);
-          break;
-        }
-        else {
-          project.addTodo(todoObj);
-        }
-      }
-      
+      if(inputIsValid){
+      project.addTodo(todoObj); //USE TODO CLASS
       renderTodosContainer(project);
+      }
     });
-
-
-    
-    todosContainer.appendChild(newTodoForm);
 
     newTodoForm.appendChild(titleField);
     newTodoForm.appendChild(descriptionField);
     newTodoForm.appendChild(dueDateField);
     newTodoForm.appendChild(priorityField);
     newTodoForm.appendChild(saveBtn);
-
+    todosContainer.appendChild(newTodoForm);
   }
 
   renderSideBar();
-
   main.appendChild(sideBar);
   main.appendChild(todosContainer);
-
   renderTodosContainer(projects[0]);
-
 }
 
 export default render;
