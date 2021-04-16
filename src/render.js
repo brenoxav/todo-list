@@ -227,8 +227,6 @@ const render = function () {
 
   }
 
-
-
   renderSideBar();
 
   main.appendChild(sideBar);
