@@ -26,9 +26,43 @@ let exampleTodos = [
   }
 ];
 
+let exampleProjects = [
+  {  
+    name: 'work',
+    todos:[
+      {  
+        title: 'linters',
+        description: 'check for linter errors',
+        dueDate: '3-4-2021',
+        priority: 'low'
+      },
+      {  
+        title: 'tests',
+        description: 'check for test errors',
+        dueDate: '3-4-2021',
+        priority: 'high'
+      }
+    ]
+  },
+  {  
+    name: 'personal',
+    todos: [
+      {  
+        title: 'readme',
+        description: 'update readme on github',
+        dueDate: '2-4-2021',
+        priority: 'mid'
+      },
+    ]
+  }
+]
+
 let projects = [];
 
 const defaultProject = new Project('default', exampleTodos);
+projects.push(defaultProject);
+exampleProjects = exampleProjects.map(project => new Project(project.name, project.todos));
+projects.push(...exampleProjects);
 
 //RENDER//////////////////////////////////////////////////////////////////////
 const render = function() {
@@ -54,58 +88,56 @@ const render = function() {
 
 // RENDER SIDEBAR
 const renderSideBar = () => {
+  // CLEAR SIDEBAR TO RENDER UPDATED LIST
   sideBar.innerHTML = '';
-  // const allTodosTab = document.createElement('div');
-  // allTodosTab.classList.add('project-tab');
-  // allTodosTab.textContent = 'All Todo';
-
-  // allTodosTab.addEventListener('click', ()=>{
-  //   clearTodosWrapper();
-  //   renderTodosFromProject(ungroupedTodos);
-
-  //   projects.forEach((project)=>{
-  //     renderTodosFromProject(project.listOfTodos, project.name);
-  //   });
-
-  //   renderAddTodoBtn(ungroupedTodos);
-  // });
-
-  // sideBar.appendChild(allTodosTab);
-
+  
   //RENDER EACH PROJECT NAME IN SIDEBAR
   projects.forEach((project, index) => {
     const projectBtn = document.createElement('button');
-    projectBtn.outerHTML = `
-      <button data-index=${index} class="project-btn">${project.name}</button>
-    `;
-
-    // const projectBtn = document.createElement('div');
-    // projectBtn.setAttribute('data-index', index);
-    // projectBtn.classList.add('project-tab');
-    // projectBtn.textContent = project.name;
+    projectBtn.setAttribute('data-index', index);
+    projectBtn.classList.add('project-btn');
+    projectBtn.textContent = project.name;
     
     projectBtn.addEventListener('click', () => {
-      //clearTodosWrapper();
       renderTodosFromProject(project);
-    })
+    });
+
     sideBar.appendChild(projectBtn);
+
   });
   
   // ADD PROJECT BUTTON
   const addProjectBtn = document.createElement('button');
-  addProjectBtn.outerHTML = `
-    <button class="add-project-btn"> + </button>
-  `;
+  addProjectBtn.classList.add('project-tab');
+  addProjectBtn.textContent = ' + ';
 
   addProjectBtn.addEventListener('click', () => { 
     newProjectForm.classList.toggle('hidden');
   });
 
-  const newProjectForm = renderNewProjectForm();
+  sideBar.appendChild(addProjectBtn);
+
+  //  NEW PROJECT FORM
+
+  const newProjectForm = document.createElement('div');
+  newProjectForm.classList.add('new-project-wrapper');
+
+  const inputField = document.createElement('input');
+  inputField.classList.add('new-project-input');
+  
+  const saveBtn = document.createElement('button');
+  saveBtn.classList.add('save-project-btn');
+  saveBtn.textContent = 'save';
+  saveBtn.addEventListener('click', ()=>{
+    projects.push(new Project(inputField.value));
+    renderSideBar();
+  });
+
+  newProjectForm.appendChild(inputField);
+  newProjectForm.appendChild(saveBtn);
+
   newProjectForm.classList.add('hidden');
   sideBar.appendChild(newProjectForm);
-
-  sideBar.appendChild(addProjectBtn);
   
 };
 
@@ -182,27 +214,6 @@ const renderSideBar = () => {
       newTodoForm.classList.toggle('hidden');
     })
     todoList.appendChild(addTodoBtn);
-  }
-
-  // NEW PROJECT Form
-  const renderNewProjectForm = () =>{
-    const newProjectForm = document.createElement('div');
-    newProjectForm.classList.add('new-project-wrapper');
-    const inputField = document.createElement('input');
-    inputField.classList.add('new-project-input');
-    
-    const saveBtn = document.createElement('button');
-    saveBtn.classList.add('save-project-btn');
-    saveBtn.textContent = 'save';
-    saveBtn.addEventListener('click', ()=>{
-      projectModule.createProject(inputField.value);
-      renderSideBar();
-    });
-
-    newProjectForm.appendChild(inputField);
-    newProjectForm.appendChild(saveBtn);
-
-    return newProjectForm;
   }
 
   
