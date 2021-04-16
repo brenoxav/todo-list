@@ -149,7 +149,19 @@ const render = function () {
         </span>
       </div>
       `
+      
     });
+
+    // ADD EVENT LISTNER TO DELETE BTNS
+    const deleteBtns = document.querySelectorAll('.todo-delete-btn');
+      
+    deleteBtns.forEach((btn, btnIndex) => {
+      btn.addEventListener('click', () => {
+        project.deleteTodo(btnIndex);
+        renderTodosContainer(project);
+      });
+    });
+
 
     // ADD TODO BUTTON
     const addTodoBtn = document.createElement('button');
@@ -163,6 +175,7 @@ const render = function () {
 
 
     // NEW TODO FORM
+    
     const newTodoForm = document.createElement('div');
     newTodoForm.classList.add('new-todo-wrapper');
     newTodoForm.classList.add('hidden');
@@ -200,30 +213,32 @@ const render = function () {
       };
 
       //CHECK IF FIELD IS EMPTY
-      Object.entries(todoObj).some((field) => {field[1] === ""});
+      const inputIsValid = Object.entries(todoObj).every((field) =>{
+        if (field[1] === ""){
+          alert(`The field ${field[0]} can't be empty!`);
+          return false;
+        }
+        else{
+          return true;
+        }
+        });
 
-      for (const field in todoObj) {
-        if (todoObj[field] === '') {
-          alert(`The field ${field} can't be empty!`);
-          break;
-        }
-        else {
-          project.addTodo(todoObj);
-        }
+      if(inputIsValid){
+      project.addTodo(todoObj);
+      renderTodosContainer(project);
       }
       
-      renderTodosContainer(project);
     });
 
-
-    
-    todosContainer.appendChild(newTodoForm);
 
     newTodoForm.appendChild(titleField);
     newTodoForm.appendChild(descriptionField);
     newTodoForm.appendChild(dueDateField);
     newTodoForm.appendChild(priorityField);
     newTodoForm.appendChild(saveBtn);
+    
+    todosContainer.appendChild(newTodoForm);
+
 
   }
 
