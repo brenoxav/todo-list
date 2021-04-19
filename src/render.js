@@ -1,6 +1,6 @@
 import Project from './project';
 import Todo from './todo';
-
+import todoForm from './todoForm';
 
 //DATA////////////////////////////////////////////////////////////////////////
 //TEST DATA
@@ -148,18 +148,34 @@ const render = function () {
       </div>
       `
       
+
+    });
+
+    // ADD EVENT LISTNER TO EDIT BTNS
+    const editBtns = document.querySelectorAll('.todo-edit-btn');
+
+    editBtns.forEach((btn, btnIndex) => {
+      btn.addEventListener('click', () => {
+        todoForm.renderForm(project[btnIndex]);
+        todoFormContainer.classList.toggle('hidden');
+      });
     });
 
     // ADD EVENT LISTNER TO DELETE BTNS
     const deleteBtns = document.querySelectorAll('.todo-delete-btn');
-      
+
     deleteBtns.forEach((btn, btnIndex) => {
       btn.addEventListener('click', () => {
         project.deleteTodo(btnIndex);
-        renderTodosContainer(project);
+        renderTodosContainer();
       });
     });
 
+    //TODOs FORM 
+    // const todoFormContainer = document.createElement('div');
+
+    // // const newTodoForm = todoForm.createTodoForm();
+    // // console.log(newTodoForm);
 
     // ADD TODO BUTTON
     const addTodoBtn = document.createElement('button');
@@ -167,71 +183,77 @@ const render = function () {
     addTodoBtn.textContent = 'Add todo';
 
     addTodoBtn.addEventListener('click', () => {
-      newTodoForm.classList.toggle('hidden');
+      todoForm.renderForm();
+      todoFormContainer.classList.toggle('hidden');
     })
     todosContainer.appendChild(addTodoBtn);
 
 
     // NEW TODO FORM
-    const newTodoForm = document.createElement('div');
-    newTodoForm.classList.add('new-todo-wrapper');
-    newTodoForm.classList.add('hidden');
+    const todoFormContainer = todoForm.createTodoForm();
+    todoFormContainer.classList.add('hidden');
+    
+    todosContainer.appendChild(todoFormContainer);
+    // const newTodoForm = document.createElement('div');
+    // newTodoForm.classList.add('new-todo-wrapper');
+    // newTodoForm.classList.add('hidden');
 
-    const titleField = document.createElement('input');
-    titleField.classList.add('new-todo-title');
-    titleField.setAttribute('placeholder', 'Title');
+    // const titleField = document.createElement('input');
+    // titleField.classList.add('new-todo-title');
+    // titleField.setAttribute('placeholder', 'Title');
 
-    const descriptionField = document.createElement('textarea');
-    descriptionField.classList.add('new-todo-description');
-    descriptionField.setAttribute('placeholder', 'Description');
+    // const descriptionField = document.createElement('textarea');
+    // descriptionField.classList.add('new-todo-description');
+    // descriptionField.setAttribute('placeholder', 'Description');
 
-    const dueDateField = document.createElement('input');
-    dueDateField.classList.add('new-todo-due-date');
-    dueDateField.setAttribute('type', 'date');
+    // const dueDateField = document.createElement('input');
+    // dueDateField.classList.add('new-todo-due-date');
+    // dueDateField.setAttribute('type', 'date');
 
-    const priorityField = document.createElement('select');
-    priorityField.classList.add('new-todo-priority');
-    priorityField.setAttribute('name', 'new-todo-priority');
-    priorityField.innerHTML = `
-      <option value="low">low</option>
-      <option value="mid">mid</option>
-      <option value="high">high</option>
-    `;
+    // const priorityField = document.createElement('select');
+    // priorityField.classList.add('new-todo-priority');
+    // priorityField.setAttribute('name', 'new-todo-priority');
+    // priorityField.innerHTML = `
+    //   <option value="low">low</option>
+    //   <option value="mid">mid</option>
+    //   <option value="high">high</option>
+    // `;
 
-    const saveBtn = document.createElement('button');
-    saveBtn.classList.add('save-todo-btn');
-    saveBtn.textContent = 'save';
-    saveBtn.addEventListener('click', () => {
-      const todoObj = {
-        title: titleField.value,
-        description: descriptionField.value,
-        dueDate: dueDateField.value,
-        priority: priorityField.value
-      };
+    // const saveBtn = document.createElement('button');
+    // saveBtn.classList.add('save-todo-btn');
+    // saveBtn.textContent = 'save';
+    // saveBtn.addEventListener('click', () => {
+    //   const todoObj = {
+    //     title: titleField.value,
+    //     description: descriptionField.value,
+    //     dueDate: dueDateField.value,
+    //     priority: priorityField.value
+    //   };
 
-      //CHECK IF FIELD IS EMPTY
-      const inputIsValid = Object.entries(todoObj).every((field) =>{
-        if (field[1] === ""){
-          alert(`The field ${field[0]} can't be empty!`);
-          return false;
-        }
-        else{
-          return true;
-        }
-        });
+    //   //CHECK IF FIELD IS EMPTY
+    //   const inputIsValid = Object.entries(todoObj).every((field) => {
+    //     if (field[1] === "") {
+    //       alert(`The field ${field[0]} can't be empty!`);
+    //       return false;
+    //     }
+    //     else {
+    //       return true;
+    //     }
+    //   });
 
-      if(inputIsValid){
-      project.addTodo(todoObj); //USE TODO CLASS
-      renderTodosContainer(project);
-      }
-    });
+    //   if (inputIsValid) {
+    //     project.addTodo(todoObj); //USE TODO CLASS
+    //     renderTodosContainer(project);
+    //   }
+    // });
 
-    newTodoForm.appendChild(titleField);
-    newTodoForm.appendChild(descriptionField);
-    newTodoForm.appendChild(dueDateField);
-    newTodoForm.appendChild(priorityField);
-    newTodoForm.appendChild(saveBtn);
-    todosContainer.appendChild(newTodoForm);
+    // newTodoForm.appendChild(titleField);
+    // newTodoForm.appendChild(descriptionField);
+    // newTodoForm.appendChild(dueDateField);
+    // newTodoForm.appendChild(priorityField);
+    // newTodoForm.appendChild(saveBtn);
+
+    // todosContainer.appendChild(newTodoForm);
   }
 
   renderSideBar();
