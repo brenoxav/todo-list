@@ -136,19 +136,54 @@ const render = function () {
     todosContainer.innerHTML = '';
     // ADD EACH TODO ITEM
     project.todos.forEach((todo, index) => {
-      todosContainer.innerHTML += `
-      <div class="todo-item priority-${todo.priority}" data-index=${index}>
-        <input type="checkbox" class="todo-checkbox">
-        <span class="todo-title">${todo.title}</span>
-        <span class="todo-due-date">${todo.dueDate}</span>
-        <span class="todo-actions-wrapper">
-          <button class="todo-edit-btn">edit</button>
-          <button class="todo-delete-btn">delete</button>
-        </span>
-      </div>
-      `
-      
+      // todosContainer.innerHTML += `
+      // <div class="todo-item priority-${todo.priority}" data-index=${index}>
+      //   <input type="checkbox" class="todo-checkbox">
+      //   <span class="todo-title">${todo.title}</span>
+      //   <span class="todo-due-date">${todo.dueDate}</span>
+      //   <span class="todo-actions-wrapper">
+      //     <button class="todo-edit-btn">edit</button>
+      //     <button class="todo-delete-btn">delete</button>
+      //   </span>
+      // </div>
+      // `
+      const todoItem = document.createElement('div');
 
+      todoItem.classList.add('todo-item', `priority-${todo.priority}`);
+      const todoCheck = document.createElement('input');
+      todoCheck.setAttribute('type', 'checkbox');
+      todoCheck.classList.add('todo-check');
+      const todoTitle = document.createElement('span');
+      todoTitle.classList.add('todo-title');
+      todoTitle.textContent = todo.title;
+      const todoDueDate = document.createElement('span');
+      todoDueDate.classList.add('todo-due-date');
+      todoDueDate.textContent = todo.dueDate;
+      const todoActionsWrapper = document.createElement('span');
+      todoActionsWrapper.classList.add('todo-actions-wrapper');
+
+      const todoEditBtn = document.createElement('button');
+      todoEditBtn.classList.add('todo-edit-btn');
+      todoEditBtn.textContent = 'edit';
+      
+      const todoDeleteBtn = document.createElement('button');
+      todoDeleteBtn.classList.add('todo-delete-btn');
+      todoDeleteBtn.textContent = 'delete';
+
+      todoActionsWrapper.appendChild(todoEditBtn);
+      todoActionsWrapper.appendChild(todoDeleteBtn);
+
+      todoItem.appendChild(todoCheck);
+      todoItem.appendChild(todoTitle);
+      todoItem.appendChild(todoDueDate);
+      todoItem.appendChild(todoActionsWrapper);
+
+      todosContainer.appendChild(todoItem);
+
+      let todoEditForm = new todoForm(todo);
+      todoEditForm = todoEditForm.render();
+      todoEditForm.classList.add('hidden');
+      todosContainer.appendChild(todoEditForm);
     });
 
     // ADD EVENT LISTNER TO EDIT BTNS

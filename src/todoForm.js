@@ -1,91 +1,107 @@
 
 
-const todoForm = {
+class todoForm {
+  constructor ({title = "", description = "", dueDate = "", priority = ""}) {
+    this.titleField = document.createElement('input');
+    this.descriptionField = document.createElement('textarea');
+    this.dueDateField = document.createElement('input');
+    this.priorityField = document.createElement('select');
+    
+    this.titleField.value = title;
+    this.descriptionField.value = description;
+    this.dueDateField.value = dueDate;
+    this.priorityField.value = priority;
+  }
+  
+  render() { //define type of button action
+    this.todoFormContainer = document.createElement('div');
 
-  todoFormContainer: document.createElement('div'),
-  titleField: document.createElement('input'),
-  descriptionField: document.createElement('textarea'),
-  dueDateField: document.createElement('input'),
-  priorityField: document.createElement('select'),
-  saveBtn: document.createElement('button'),
+    this.saveBtn = document.createElement('button');
+    
+    this.todoFormContainer.appendChild(this.titleField);
+    this.todoFormContainer.appendChild(this.descriptionField);
+    this.todoFormContainer.appendChild(this.dueDateField);
+    this.todoFormContainer.appendChild(this.priorityField);
+
+    this.todoFormContainer.appendChild(this.saveBtn); //BUTTON!
+
+    return this.todoFormContainer;
+  }
 
 
   // render is : change values of the elements 
 
   // this method should be called 
-  renderForm: (todoObj={
-    title:'',
-    description:'',
-    dueDate:'',
-    priority:'low'
-  }) => {
-    todoForm.titleField.value = todoObj.title;
-    todoForm.descriptionField.value = todoObj.description;
-    todoForm.dueDateField.value = todoObj.dueDate;
-    todoForm.priorityField.value = todoObj.priority;
+  // renderForm: (todoObj={
+  //   title:'',
+  //   description:'',
+  //   dueDate:'',
+  //   priority:'low'
+  // }) => {
+  //   todoForm.titleField.value = todoObj.title;
+  //   todoForm.descriptionField.value = todoObj.description;
+  //   todoForm.dueDateField.value = todoObj.dueDate;
+  //   todoForm.priorityField.value = todoObj.priority;
 
-    return todoFormContainer;
-  },
+  //   return todoFormContainer;
+  // },
 
-  getValues:()=>{},
+  // getValues:()=>{},
 
-  createTodoForm: () => {
+  // createTodoForm: () => {
     
     
-    todoForm.todoFormContainer.classList.add('new-todo-wrapper');
-    todoForm.titleField.classList.add('new-todo-title');
-    todoForm.titleField.setAttribute('placeholder', 'Title');
+  //   todoForm.todoFormContainer.classList.add('new-todo-wrapper');
 
-    todoForm.descriptionField.classList.add('new-todo-description');
-    todoForm.descriptionField.setAttribute('placeholder', 'Description');
+  //   todoForm.titleField.classList.add('new-todo-title');
+  //   todoForm.titleField.setAttribute('placeholder', 'Title');
 
-    todoForm.dueDateField.classList.add('new-todo-due-date');
-    todoForm.dueDateField.setAttribute('type', 'date');
+  //   todoForm.descriptionField.classList.add('new-todo-description');
+  //   todoForm.descriptionField.setAttribute('placeholder', 'Description');
 
-    todoForm.priorityField.classList.add('new-todo-priority');
-    todoForm.priorityField.setAttribute('name', 'new-todo-priority');
-    todoForm.priorityField.innerHTML = `
-        <option value="low">low</option>
-        <option value="mid">mid</option>
-        <option value="high">high</option>
-      `;
+  //   todoForm.dueDateField.classList.add('new-todo-due-date');
+  //   todoForm.dueDateField.setAttribute('type', 'date');
 
-    todoForm.saveBtn.classList.add('save-todo-btn');
-    todoForm.saveBtn.textContent = 'save';
+  //   todoForm.priorityField.classList.add('new-todo-priority');
+  //   todoForm.priorityField.setAttribute('name', 'new-todo-priority');
+  //   todoForm.priorityField.innerHTML = `
+  //       <option value="low">low</option>
+  //       <option value="mid">mid</option>
+  //       <option value="high">high</option>
+  //     `;
 
-    ///////////////////////////////////////////////////
-    todoForm.saveBtn.addEventListener('click', () => {
-      const todoObj = {
-        title: titleField.value,
-        description: descriptionField.value,
-        dueDate: dueDateField.value,
-        priority: priorityField.value
-      };
+  //   todoForm.saveBtn.classList.add('save-todo-btn');
+  //   todoForm.saveBtn.textContent = 'save';
 
-      //CHECK IF FIELD IS EMPTY
-      const inputIsValid = Object.entries(todoObj).every((field) => {
-        if (field[1] === "") {
-          alert(`The field ${field[0]} can't be empty!`);
-          return false;
-        }
-        else {
-          return true;
-        }
-      });
+  //   ///////////////////////////////////////////////////
+  //   todoForm.saveBtn.addEventListener('click', () => {
+  //     const todoObj = {
+  //       title: titleField.value,
+  //       description: descriptionField.value,
+  //       dueDate: dueDateField.value,
+  //       priority: priorityField.value
+  //     };
 
-      if (inputIsValid) {
-        project.addTodo(todoObj); //USE TODO CLASS
-        renderTodosContainer(project);
-      }
-    });
+  //     //CHECK IF FIELD IS EMPTY
+  //     const inputIsValid = Object.entries(todoObj).every((field) => {
+  //       if (field[1] === "") {
+  //         alert(`The field ${field[0]} can't be empty!`);
+  //         return false;
+  //       }
+  //       else {
+  //         return true;
+  //       }
+  //     });
 
-    todoForm.todoFormContainer.appendChild(todoForm.titleField);
-    todoForm.todoFormContainer.appendChild(todoForm.descriptionField);
-    todoForm.todoFormContainer.appendChild(todoForm.dueDateField);
-    todoForm.todoFormContainer.appendChild(todoForm.priorityField);
-    todoForm.todoFormContainer.appendChild(todoForm.saveBtn);
+  //     if (inputIsValid) {
+  //       project.addTodo(todoObj); //USE TODO CLASS
+  //       renderTodosContainer(project);
+  //     }
+  //   });
 
-    return todoForm.todoFormContainer;
-  }
+    
+
+    
+  //  }
 }
 export default todoForm;
