@@ -2,12 +2,10 @@ import render from './render';
 import todoForm from './todoForm';
 
 const renderTodos = (project) => {
-
-  console.log(project);
   const todosContainer = document.createElement('div');
   todosContainer.classList.add('todo-list');
-
   todosContainer.innerHTML = '';
+
   // ADD EACH TODO ITEM
   project.todos.forEach((todo, index) => {
     const todoItem = document.createElement('div');
@@ -39,7 +37,6 @@ const renderTodos = (project) => {
 
     todoDeleteBtn.addEventListener('click', () => {
       project.deleteTodo(index);
-      // renderTodos(project);
       render();
     });
 
@@ -59,7 +56,6 @@ const renderTodos = (project) => {
     todosContainer.appendChild(todoEditForm);
   });
 
-  
   //NEW TODOs FORM 
   let todoNewForm = new todoForm({}, project);
   todoNewForm = todoNewForm.render();
@@ -70,7 +66,6 @@ const renderTodos = (project) => {
   const addTodoBtn = document.createElement('button');
   addTodoBtn.classList.add('add-todo-btn');
   addTodoBtn.textContent = 'Add todo';
-
   addTodoBtn.addEventListener('click', () => {
     todoNewForm.classList.toggle('hidden');
   })

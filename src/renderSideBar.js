@@ -1,25 +1,32 @@
 import render from './render';
-
 import Project from './project';
-import renderTodos from './renderTodos';
 
 // RENDER SIDEBAR
 const renderSideBar = (projects) => {
   // CLEAR SIDEBAR TO RENDER UPDATED LIST
-  console.log('RENDER SIDEBAR');
-  
   const sideBar = document.createElement('div');
   sideBar.classList.add('side-bar');
-  
   sideBar.innerHTML = '';
 
   //RENDER EACH PROJECT NAME IN SIDEBAR
   projects.forEach((project, index) => {
     const projectBtn = document.createElement('button');
-    //projectBtn.setAttribute('data-index', index);
     projectBtn.classList.add('project-btn');
     projectBtn.textContent = project.name;
 
+    if(index !== 0) {
+    const projectDeleteBtn = document.createElement('button');
+    projectDeleteBtn.classList.add('project-delete-btn');
+    projectDeleteBtn.textContent = ' X ';
+    projectDeleteBtn.addEventListener('click', () => {
+      
+      projects.splice(index, 1);
+      render();
+    });
+    
+    projectBtn.appendChild(projectDeleteBtn);
+  }
+    
     projectBtn.addEventListener('click', () => {
       render(project);
     });
@@ -50,15 +57,11 @@ const renderSideBar = (projects) => {
   saveBtn.textContent = 'save';
   saveBtn.addEventListener('click', () => {
     projects.push(new Project(inputField.value));
-    // renderSideBar(projects);
-    console.log(projects)
     render();
   });
 
   newProjectForm.appendChild(inputField);
   newProjectForm.appendChild(saveBtn);
-
-  // newProjectForm.classList.add('hidden');
   sideBar.appendChild(newProjectForm);
 
   return sideBar;
