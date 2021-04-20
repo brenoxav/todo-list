@@ -1,3 +1,4 @@
+import render from "./render";
 import Todo from "./todo";
 
 class todoForm {
@@ -11,6 +12,8 @@ class todoForm {
     this.descriptionField.value = description;
     this.dueDateField.value = dueDate;
     this.priorityField.value = priority;
+    
+    this.priority = priority;
 
     this.project = project;
 
@@ -30,11 +33,30 @@ class todoForm {
     this.dueDateField.setAttribute('type', 'date');
     this.priorityField.classList.add('new-todo-priority');
     this.priorityField.setAttribute('name', 'new-todo-priority');
+
+    let [lowSelected, midSelected, highSelected] = ['', '', ''];
+
+    console.log(this.priority);
+    
+    switch (this.priority) {
+      case 'high':
+        highSelected = 'selected = "selected"';
+        break;
+      case 'mid':
+        midSelected = 'selected = "selected"';
+        break;
+      default:
+        lowSelected = 'selected = "selected"';
+        break;
+    }
+
     this.priorityField.innerHTML = `
-    <option value="low">low</option>
-    <option value="mid">mid</option>
-    <option value="high">high</option>
+    <option value="low" ${lowSelected}>low</option>
+    <option value="mid" ${midSelected}>mid</option>
+    <option value="high" ${highSelected}>high</option>
     `;
+    
+    
 
     // SAVE BTN
     this.saveBtn = document.createElement('button');
@@ -68,6 +90,7 @@ class todoForm {
           console.log(this.project);
           // renderTodosContainer(this.project);
         }
+        render();
       }
     })
 

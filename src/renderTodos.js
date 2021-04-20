@@ -1,3 +1,4 @@
+import render from './render';
 import todoForm from './todoForm';
 
 const renderTodos = (project) => {
@@ -38,7 +39,8 @@ const renderTodos = (project) => {
 
     todoDeleteBtn.addEventListener('click', () => {
       project.deleteTodo(index);
-      renderTodos(project);
+      // renderTodos(project);
+      render();
     });
 
     todoActionsWrapper.appendChild(todoEditBtn);

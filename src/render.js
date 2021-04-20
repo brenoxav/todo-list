@@ -72,12 +72,14 @@ exampleProjects.forEach(project => project.todos = project.todos.map(todo => new
 projects.push(...exampleProjects);
 
 //RENDER//////////////////////////////////////////////////////////////////////
-const render = function () {
+const render = function (project={}) {
 
   console.log('RENDERING...');
   // Create base elements
   const main = document.querySelector('main');
   main.classList.add('main');
+
+  main.innerHTML = '';
 
   const header = document.createElement('header');
   header.classList.add('header');
@@ -90,6 +92,7 @@ const render = function () {
 
   main.appendChild(header);
 
+ 
   // // RENDER SIDEBAR
   // const renderSideBar = () => {
   //   // CLEAR SIDEBAR TO RENDER UPDATED LIST
@@ -212,12 +215,19 @@ const render = function () {
   //   })
   //   todosContainer.appendChild(addTodoBtn);
   // }
-  
+
+  console.log(projects);
   const sideBar = renderSideBar(projects);
   main.appendChild(sideBar);
 
+  let todosContainer;
+  if (project instanceof Project){
+    todosContainer = renderTodos(project);
+  }
+  else{
+    todosContainer = renderTodos(projects[0]); //DEFAULT PROJECT
+  }
 
-  const todosContainer = renderTodos(projects[0]);
   main.appendChild(todosContainer);
 
   //renderTodos(projects[0]); //DEFAULT PROJECT

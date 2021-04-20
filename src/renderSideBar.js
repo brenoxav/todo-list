@@ -21,7 +21,7 @@ const renderSideBar = (projects) => {
     projectBtn.textContent = project.name;
 
     projectBtn.addEventListener('click', () => {
-      renderTodos(project);
+      render(project);
     });
 
     sideBar.appendChild(projectBtn);
@@ -50,7 +50,7 @@ const renderSideBar = (projects) => {
   saveBtn.textContent = 'save';
   saveBtn.addEventListener('click', () => {
     projects.push(new Project(inputField.value));
-    renderSideBar(projects);
+    // renderSideBar(projects);
     console.log(projects)
     render();
   });
