@@ -15,7 +15,6 @@ class todoForm {
     this.project = project;
 
     this.todoObj = arguments[0];
-    console.log(this.todoObj);
   }
 
   render() { //define type of button action
