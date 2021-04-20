@@ -18,8 +18,8 @@ const renderSideBar = (projects) => {
     const projectDeleteBtn = document.createElement('button');
     projectDeleteBtn.classList.add('project-delete-btn');
     projectDeleteBtn.textContent = ' X ';
-    projectDeleteBtn.addEventListener('click', () => {
-      
+    projectDeleteBtn.addEventListener('click', (event) => {
+      event.stopPropagation();
       projects.splice(index, 1);
       render();
     });

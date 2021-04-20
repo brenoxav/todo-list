@@ -84,10 +84,28 @@ font-family: -apple-system, BlinkMacSystemFont,
   font-size: 1.5rem;
   color: #fff;
   background-color: #08f;
+  position: relative;
 }
 
 .project-btn:focus {
   outline: none;
+}
+
+.project-btn:hover .project-delete-btn {
+  display: inline-block;
+}
+
+.project-delete-btn {
+  display: none;
+  position: absolute;
+  right: 1rem;
+  border-radius: 50%;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 4px solid #ffffff;
+  background-color: transparent;
+  color: #fff;
+  font-weight: 900;
 }
 
 .add-project-btn {
