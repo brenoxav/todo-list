@@ -58,9 +58,15 @@ let exampleProjects = [
 
 let projects = [];
 
+exampleTodos = exampleTodos.map(todo => new Todo(todo))
+
+
 const defaultProject = new Project('default', exampleTodos);
 projects.push(defaultProject);
 exampleProjects = exampleProjects.map(project => new Project(project.name, project.todos));
+
+exampleProjects.forEach(project => project.todos = project.todos.map(todo => new Todo(todo)));
+
 projects.push(...exampleProjects);
 
 //RENDER//////////////////////////////////////////////////////////////////////
@@ -111,7 +117,7 @@ const render = function () {
 
     //  NEW PROJECT FORM
     const newProjectForm = document.createElement('div');
-    newProjectForm.classList.add('new-project-wrapper');
+    newProjectForm.classList.add('new-project-wrapper', 'hidden');
 
     const inputField = document.createElement('input');
     inputField.classList.add('new-project-name');
@@ -127,7 +133,7 @@ const render = function () {
     newProjectForm.appendChild(inputField);
     newProjectForm.appendChild(saveBtn);
 
-    newProjectForm.classList.add('hidden');
+    // newProjectForm.classList.add('hidden');
     sideBar.appendChild(newProjectForm);
   };
 
@@ -162,13 +168,23 @@ const render = function () {
       const todoActionsWrapper = document.createElement('span');
       todoActionsWrapper.classList.add('todo-actions-wrapper');
 
+
       const todoEditBtn = document.createElement('button');
       todoEditBtn.classList.add('todo-edit-btn');
       todoEditBtn.textContent = 'edit';
-      
+
+      todoEditBtn.addEventListener('click', () => {
+        todoEditForm.classList.toggle('hidden');
+      });
+
       const todoDeleteBtn = document.createElement('button');
       todoDeleteBtn.classList.add('todo-delete-btn');
       todoDeleteBtn.textContent = 'delete';
+
+      todoDeleteBtn.addEventListener('click', () => {
+        project.deleteTodo(index);
+        renderTodosContainer(project);
+      });
 
       todoActionsWrapper.appendChild(todoEditBtn);
       todoActionsWrapper.appendChild(todoDeleteBtn);
@@ -186,31 +202,12 @@ const render = function () {
       todosContainer.appendChild(todoEditForm);
     });
 
-    // ADD EVENT LISTNER TO EDIT BTNS
-    const editBtns = document.querySelectorAll('.todo-edit-btn');
-
-    editBtns.forEach((btn, btnIndex) => {
-      btn.addEventListener('click', () => {
-        todoForm.renderForm(project[btnIndex]);
-        todoFormContainer.classList.toggle('hidden');
-      });
-    });
-
-    // ADD EVENT LISTNER TO DELETE BTNS
-    const deleteBtns = document.querySelectorAll('.todo-delete-btn');
-
-    deleteBtns.forEach((btn, btnIndex) => {
-      btn.addEventListener('click', () => {
-        project.deleteTodo(btnIndex);
-        renderTodosContainer();
-      });
-    });
-
-    //TODOs FORM 
-    // const todoFormContainer = document.createElement('div');
-
-    // // const newTodoForm = todoForm.createTodoForm();
-    // // console.log(newTodoForm);
+    
+    //NEW TODOs FORM 
+    let todoNewForm = new todoForm({}, project);
+    todoNewForm = todoNewForm.render();
+    todoNewForm.classList.add('hidden');
+    todosContainer.appendChild(todoNewForm);
 
     // ADD TODO BUTTON
     const addTodoBtn = document.createElement('button');
@@ -218,17 +215,16 @@ const render = function () {
     addTodoBtn.textContent = 'Add todo';
 
     addTodoBtn.addEventListener('click', () => {
-      todoForm.renderForm();
-      todoFormContainer.classList.toggle('hidden');
+      todoNewForm.classList.toggle('hidden');
     })
     todosContainer.appendChild(addTodoBtn);
 
 
     // NEW TODO FORM
-    const todoFormContainer = todoForm.createTodoForm();
-    todoFormContainer.classList.add('hidden');
+    // const todoFormContainer = todoForm.createTodoForm();
+    // todoFormContainer.classList.add('hidden');
     
-    todosContainer.appendChild(todoFormContainer);
+    // todosContainer.appendChild(todoFormContainer);
     // const newTodoForm = document.createElement('div');
     // newTodoForm.classList.add('new-todo-wrapper');
     // newTodoForm.classList.add('hidden');

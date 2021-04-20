@@ -1,3 +1,4 @@
+import Todo from './todo';
 class Project {
   constructor(name, todos = []){
     this.name = name;
@@ -5,7 +6,7 @@ class Project {
   }
 
   addTodo(todo) {
-    this.todos.push(todo);
+    this.todos.push(new Todo(todo));
   }
 
   deleteTodo(todoIndex) {

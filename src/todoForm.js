@@ -1,23 +1,77 @@
-
+import Todo from "./todo";
 
 class todoForm {
-  constructor ({title = "", description = "", dueDate = "", priority = ""}) {
+  constructor({ title = "", description = "", dueDate = "", priority = "" }, project = {}) {
     this.titleField = document.createElement('input');
     this.descriptionField = document.createElement('textarea');
     this.dueDateField = document.createElement('input');
     this.priorityField = document.createElement('select');
-    
+
     this.titleField.value = title;
     this.descriptionField.value = description;
     this.dueDateField.value = dueDate;
     this.priorityField.value = priority;
+
+    this.project = project;
+
+    this.todoObj = arguments[0];
+    console.log(this.todoObj);
   }
-  
+
   render() { //define type of button action
     this.todoFormContainer = document.createElement('div');
 
+    // STYLING FORM ELEMENTS
+    this.todoFormContainer.classList.add('new-todo-wrapper');
+    this.titleField.classList.add('new-todo-title');
+    this.titleField.setAttribute('placeholder', 'Title');
+    this.descriptionField.classList.add('new-todo-description');
+    this.descriptionField.setAttribute('placeholder', 'Description');
+    this.dueDateField.classList.add('new-todo-due-date');
+    this.dueDateField.setAttribute('type', 'date');
+    this.priorityField.classList.add('new-todo-priority');
+    this.priorityField.setAttribute('name', 'new-todo-priority');
+    this.priorityField.innerHTML = `
+    <option value="low">low</option>
+    <option value="mid">mid</option>
+    <option value="high">high</option>
+    `;
+
+    // SAVE BTN
     this.saveBtn = document.createElement('button');
-    
+    this.saveBtn.classList.add('save-todo-btn');
+    this.saveBtn.textContent = 'save';
+    this.saveBtn.addEventListener('click', () => {
+      const newTodoObj = {
+        title: this.titleField.value,
+        description: this.descriptionField.value,
+        dueDate: this.dueDateField.value,
+        priority: this.priorityField.value
+      };
+
+      //CHECK IF FIELD IS EMPTY
+      const inputIsValid = Object.entries(newTodoObj).every((field) => {
+        if (field[1] === "") {
+          alert(`The field ${field[0]} can't be empty!`);
+          return false;
+        }
+        else {
+          return true;
+        }
+      });
+
+      if (inputIsValid) {
+        if (this.todoObj instanceof Todo) {
+          this.todoObj.updateTodo(newTodoObj);
+          console.log(this.project);
+        } else {
+          this.project.addTodo(newTodoObj);
+          console.log(this.project);
+          // renderTodosContainer(this.project);
+        }
+      }
+    })
+
     this.todoFormContainer.appendChild(this.titleField);
     this.todoFormContainer.appendChild(this.descriptionField);
     this.todoFormContainer.appendChild(this.dueDateField);
@@ -49,8 +103,8 @@ class todoForm {
   // getValues:()=>{},
 
   // createTodoForm: () => {
-    
-    
+
+
   //   todoForm.todoFormContainer.classList.add('new-todo-wrapper');
 
   //   todoForm.titleField.classList.add('new-todo-title');
@@ -99,9 +153,9 @@ class todoForm {
   //     }
   //   });
 
-    
 
-    
+
+
   //  }
 }
 export default todoForm;
