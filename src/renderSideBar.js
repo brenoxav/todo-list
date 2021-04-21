@@ -13,6 +13,9 @@ const renderSideBar = (projects) => {
     const projectBtn = document.createElement('button');
     projectBtn.classList.add('project-btn');
     projectBtn.textContent = project.name;
+    projectBtn.addEventListener('click', () => {
+      render(project);
+    });
 
     if(index !== 0) {
     const projectDeleteBtn = document.createElement('button');
@@ -27,10 +30,6 @@ const renderSideBar = (projects) => {
     projectBtn.appendChild(projectDeleteBtn);
   }
     
-    projectBtn.addEventListener('click', () => {
-      render(project);
-    });
-
     sideBar.appendChild(projectBtn);
   });
 
@@ -57,7 +56,7 @@ const renderSideBar = (projects) => {
   saveBtn.textContent = 'save';
   saveBtn.addEventListener('click', () => {
     projects.push(new Project(inputField.value));
-    render();
+    render(projects[projects.length-1]);
   });
 
   newProjectForm.appendChild(inputField);

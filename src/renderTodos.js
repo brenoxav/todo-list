@@ -6,6 +6,12 @@ const renderTodos = (project) => {
   todosContainer.classList.add('todo-list');
   todosContainer.innerHTML = '';
 
+  const projectName = document.createElement('h1');
+  projectName.classList.add('project-name');
+  projectName.textContent = project.name;
+
+  todosContainer.appendChild(projectName);
+
   // ADD EACH TODO ITEM
   project.todos.forEach((todo, index) => {
     const todoItem = document.createElement('div');

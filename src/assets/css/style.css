@@ -81,10 +81,15 @@ font-family: -apple-system, BlinkMacSystemFont,
   padding: 1rem;
   /* border-radius: .5rem; */
   border: none;
-  font-size: 1.5rem;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
   color: #fff;
+  font-weight: bold;
   background-color: #08f;
   position: relative;
+  /* overflow: hidden; */
+  word-wrap: break-word;
 }
 
 .project-btn:focus {
@@ -95,15 +100,22 @@ font-family: -apple-system, BlinkMacSystemFont,
   display: inline-block;
 }
 
+.project-selected {
+  background-color: #f60;
+}
+
 .project-delete-btn {
   display: none;
   position: absolute;
+  top: .6rem;
   right: 1rem;
+  bottom: .5rem;
+  float: right;
   border-radius: 50%;
-  width: 2.25rem;
-  height: 2.25rem;
-  border: 4px solid #ffffff;
-  background-color: transparent;
+  width: 2rem;
+  height: 2rem;
+  border: 2px solid #ffffff;
+  background-color: #08f;
   color: #fff;
   font-weight: 900;
 }
@@ -136,6 +148,14 @@ font-family: -apple-system, BlinkMacSystemFont,
   flex: 1;
   min-height: 100vh;
   padding: 2rem;
+}
+
+.project-name {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: #08f;
 }
 
 .todo-item {
@@ -202,17 +222,12 @@ font-family: -apple-system, BlinkMacSystemFont,
   max-width: 75%;
   margin: 1rem 0;
   font-size: 1.5rem;
-  font-family: initial;
+  font-family: inherit;
 }
 
 .new-todo-title {
   margin: 1rem 0;
   font-size: 1.5rem;
-}
-
-
-.new-todo-description {
-
 }
 
 .hidden {
