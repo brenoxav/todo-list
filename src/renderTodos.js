@@ -1,5 +1,5 @@
 import render from './render';
-import todoForm from './todoForm';
+import TodoForm from './todoForm';
 
 const renderTodos = (project) => {
   const todosContainer = document.createElement('div');
@@ -29,6 +29,10 @@ const renderTodos = (project) => {
     const todoActionsWrapper = document.createElement('span');
     todoActionsWrapper.classList.add('todo-actions-wrapper');
 
+    let todoEditForm = new TodoForm(todo);
+    todoEditForm = todoEditForm.render();
+    todoEditForm.classList.add('hidden');
+
     const todoEditBtn = document.createElement('button');
     todoEditBtn.classList.add('todo-edit-btn');
     todoEditBtn.textContent = 'edit';
@@ -56,14 +60,11 @@ const renderTodos = (project) => {
 
     todosContainer.appendChild(todoItem);
 
-    let todoEditForm = new todoForm(todo);
-    todoEditForm = todoEditForm.render();
-    todoEditForm.classList.add('hidden');
     todosContainer.appendChild(todoEditForm);
   });
 
-  //NEW TODOs FORM 
-  let todoNewForm = new todoForm({}, project);
+  // NEW TODOs FORM
+  let todoNewForm = new TodoForm({}, project);
   todoNewForm = todoNewForm.render();
   todoNewForm.classList.add('hidden');
   todosContainer.appendChild(todoNewForm);
@@ -74,10 +75,10 @@ const renderTodos = (project) => {
   addTodoBtn.textContent = 'Add todo';
   addTodoBtn.addEventListener('click', () => {
     todoNewForm.classList.toggle('hidden');
-  })
+  });
   todosContainer.appendChild(addTodoBtn);
 
   return todosContainer;
-}
+};
 
 export default renderTodos;

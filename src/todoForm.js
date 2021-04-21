@@ -1,14 +1,19 @@
-import render from "./render";
-import Todo from "./todo";
+import render from './render';
+import Todo from './todo';
 
-Date.prototype.toDateInputValue = (function() {
-  var local = new Date(this);
-  local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
-  return local.toJSON().slice(0,10);
-});
+const getDateString = (date) => {
+  date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
+  return date.toJSON().slice(0, 10);
+};
 
-class todoForm {
-  constructor({ title = "", description = "", dueDate = new Date().toDateInputValue(), priority = "" }, project = {}) {
+class TodoForm {
+  constructor(...params) {
+    [this.todoObj, this.project] = params;
+    // let title, description, dueDate, priority;
+    const {
+      title = '', description = '', dueDate = getDateString(new Date()), priority = '',
+    } = this.todoObj;
+
     this.titleField = document.createElement('input');
     this.descriptionField = document.createElement('textarea');
     this.dueDateField = document.createElement('input');
@@ -18,13 +23,12 @@ class todoForm {
     this.descriptionField.value = description;
     this.dueDateField.value = dueDate;
     this.priorityField.value = priority;
-    
+
     this.priority = priority;
-    this.project = project;
-    this.todoObj = arguments[0];
+    // this.project = project;
   }
 
-  render() { //define type of button action
+  render() { // define type of button action
     this.todoFormContainer = document.createElement('div');
 
     // STYLING FORM ELEMENTS
@@ -67,18 +71,17 @@ class todoForm {
         title: this.titleField.value,
         description: this.descriptionField.value,
         dueDate: this.dueDateField.value,
-        priority: this.priorityField.value
+        priority: this.priorityField.value,
       };
 
-      //CHECK IF FIELD IS EMPTY
+      // CHECK IF FIELD IS EMPTY
       const inputIsValid = Object.entries(newTodoObj).every((field) => {
-        if (field[1] === "") {
+        if (field[1] === '') {
           alert(`The field ${field[0]} can't be empty!`);
           return false;
         }
-        else {
-          return true;
-        }
+
+        return true;
       });
 
       if (inputIsValid) {
@@ -89,15 +92,15 @@ class todoForm {
         }
         render(this.project);
       }
-    })
+    });
 
     this.todoFormContainer.appendChild(this.titleField);
     this.todoFormContainer.appendChild(this.descriptionField);
     this.todoFormContainer.appendChild(this.dueDateField);
     this.todoFormContainer.appendChild(this.priorityField);
-    this.todoFormContainer.appendChild(this.saveBtn); //BUTTON!
+    this.todoFormContainer.appendChild(this.saveBtn); // BUTTON!
 
     return this.todoFormContainer;
   }
 }
-export default todoForm;
+export default TodoForm;
