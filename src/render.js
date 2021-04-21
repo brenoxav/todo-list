@@ -57,7 +57,6 @@ class TodoForm {
     this.priorityField.value = priority;
 
     this.priority = priority;
-    
   }
 
   render() { // define type of button action
@@ -259,9 +258,8 @@ renderSideBar = (projects) => {
   saveBtn.textContent = 'save';
   saveBtn.addEventListener('click', () => {
     projects.push(new Project(inputField.value));
-    
+
     render(projects[projects.length - 1]);
-    
   });
 
   newProjectForm.appendChild(inputField);
