@@ -90,6 +90,7 @@ class TodoForm {
         } else {
           this.project.addTodo(newTodoObj);
         }
+
         render(this.project);
       }
     });

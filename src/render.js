@@ -1,8 +1,6 @@
 import Project from './project';
-
 import renderSideBar from './renderSideBar';
 import renderTodos from './renderTodos';
-
 import storage from './storage';
 
 storage.checkLocalStorage();
@@ -24,10 +22,11 @@ const render = (project = {}) => {
   main.appendChild(sideBar);
 
   let todosContainer;
+  // console.log(project);
   if (project instanceof Project) {
     todosContainer = renderTodos(project);
   } else {
-    todosContainer = renderTodos(projects[0]); // DEFAULT PROJECT
+    todosContainer = renderTodos(storage.defaultProject);
   }
 
   main.appendChild(todosContainer);

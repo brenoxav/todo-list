@@ -3,21 +3,21 @@ import Project from './project';
 
 let exampleTodos = [
   {
-    title: 'push to github',
-    description: 'upload the latest changes on github',
-    dueDate: '2090-12-22',
+    title: 'Create GitHub Repo',
+    description: 'Push config files to GitHub',
+    dueDate: '2021-04-28',
     priority: 'high',
   },
   {
-    title: 'docs',
-    description: 'update readme on github',
-    dueDate: '2022-01-03',
+    title: 'Configure Linters',
+    description: 'Set up linters on local environment',
+    dueDate: '2021-04-29',
     priority: 'mid',
   },
   {
-    title: 'linters',
-    description: 'check for linter errors',
-    dueDate: '2020-09-03',
+    title: 'Submit Project for Review',
+    description: 'Submit review form',
+    dueDate: '2021-04-30',
     priority: 'low',
   },
 ];
@@ -56,7 +56,7 @@ let exampleProjects = [
 const projectsArr = [];
 
 exampleTodos = exampleTodos.map((todo) => new Todo(todo));
-const defaultProject = new Project('default', exampleTodos);
+const defaultProject = new Project('todos', exampleTodos);
 projectsArr.push(defaultProject);
 exampleProjects = exampleProjects.map((project) => new Project(project.name, project.todos));
 exampleProjects.forEach((project) => {
@@ -66,6 +66,7 @@ projectsArr.push(...exampleProjects);
 
 const storage = {
   projects: projectsArr,
+  defaultProject: projectsArr[0],
 
   checkLocalStorage() {
     let storedProjects = localStorage.getItem('projects');

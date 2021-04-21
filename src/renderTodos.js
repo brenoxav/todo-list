@@ -29,14 +29,13 @@ const renderTodos = (project) => {
     const todoActionsWrapper = document.createElement('span');
     todoActionsWrapper.classList.add('todo-actions-wrapper');
 
-    let todoEditForm = new TodoForm(todo);
+    let todoEditForm = new TodoForm(todo, project);
     todoEditForm = todoEditForm.render();
     todoEditForm.classList.add('hidden');
 
     const todoEditBtn = document.createElement('button');
     todoEditBtn.classList.add('todo-edit-btn');
     todoEditBtn.textContent = 'edit';
-
     todoEditBtn.addEventListener('click', () => {
       todoEditForm.classList.toggle('hidden');
     });
@@ -44,10 +43,9 @@ const renderTodos = (project) => {
     const todoDeleteBtn = document.createElement('button');
     todoDeleteBtn.classList.add('todo-delete-btn');
     todoDeleteBtn.textContent = 'delete';
-
     todoDeleteBtn.addEventListener('click', () => {
       project.deleteTodo(index);
-      render();
+      render(project);
     });
 
     todoActionsWrapper.appendChild(todoEditBtn);
