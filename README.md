@@ -44,6 +44,23 @@ todo-list
 ```
 /dist/index.html
 ```
+- Helpful scripts:
+  - To run in development mode and watch for changes:
+  ```
+  npm run dev-watch
+  ```
+  - To compile in development mode:
+  ```
+  npm run dev
+  ```
+  - To compile in production mode:
+  ```
+  npm run build
+  ```
+  - To open in browser with development mode:
+  ```
+  npm run start
+  ```
 
 ## Authors
 
