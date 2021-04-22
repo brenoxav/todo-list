@@ -1,0 +1,361 @@
+/* CSS RESET BEGIN */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 16px;
+  vertical-align: baseline;
+}
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+
+body {
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    “Segoe UI”,
+    “Roboto”,
+    “Oxygen”,
+    “Ubuntu”,
+    “Cantarell”,
+    “Fira Sans”,
+    “Droid Sans”,
+    “Helvetica Neue”,
+    sans-serif;
+  line-height: 1;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+blockquote,
+q {
+  quotes: none;
+}
+
+blockquote::before,
+blockquote::after,
+q::before,
+q::after {
+  content: '';
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* CSS RESET END */
+
+.main {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.header {
+  width: 100%;
+  height: 80px;
+  background-color: #08f;
+}
+
+/* SIDEBAR */
+.side-bar {
+  display: flex;
+  flex-direction: column;
+  width: 25%;
+  min-height: 100vh;
+  padding: 2rem;
+  font-size: 1.5rem;
+  background-color: #eee;
+}
+
+.project-btn {
+  width: 100%;
+  margin-bottom: 1rem;
+  padding: 1rem;
+
+  /* border-radius: .5rem; */
+  border: none;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #fff;
+  font-weight: bold;
+  background-color: #08f;
+  position: relative;
+
+  /* overflow: hidden; */
+  word-wrap: break-word;
+}
+
+.project-btn:focus {
+  outline: none;
+}
+
+.project-delete-btn {
+  display: none;
+  position: absolute;
+  top: 0.6rem;
+  right: 1rem;
+  bottom: 0.5rem;
+  float: right;
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+  border: 2px solid #fff;
+  background-color: #08f;
+  color: #fff;
+  font-weight: 900;
+}
+
+.project-btn:hover .project-delete-btn {
+  display: inline-block;
+}
+
+.project-selected {
+  background-color: #f60;
+}
+
+.add-project-btn {
+  padding: 1rem;
+  border-radius: 2rem;
+  border: 2px solid #08f;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #08f;
+}
+
+.add-project-btn:focus {
+  outline: none;
+}
+
+.new-project-name {
+  margin: 1rem 0;
+  font-size: 1.5rem;
+}
+
+.save-project-btn {
+  float: right;
+  font-size: 1rem;
+}
+
+/* TODO LIST */
+.todo-list {
+  flex: 1;
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+.project-name {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: #08f;
+}
+
+.todo-item {
+  display: flex;
+  align-items: baseline;
+  width: 100%;
+  margin-bottom: 0.5rem;
+  padding: 1rem;
+  border-bottom: 1px solid #aaa;
+  font-size: 1.5rem;
+}
+
+.todo-checkbox {
+  margin: 0;
+  margin-right: 1rem;
+}
+
+.todo-title {
+  flex: 1;
+}
+
+.todo-due-date {
+  margin: 0 1rem;
+  font-size: 1rem;
+}
+
+.todo-actions-wrapper {
+  justify-self: flex-end;
+}
+
+.todo-edit,
+.todo-delete {
+  font-size: 1rem;
+}
+
+.priority-low {
+  border-left: 8px solid #48f;
+}
+
+.priority-mid {
+  border-left: 8px solid #fc0;
+}
+
+.priority-high {
+  border-left: 8px solid #f60;
+}
+
+/* ADD TODO FORM */
+.add-todo-btn {
+  margin: 1rem 0;
+  padding: 0.5rem 1rem;
+  border: 2px solid #08f;
+  border-radius: 1.5rem;
+  font-size: 1rem;
+  color: #08f;
+  background-color: transparent;
+}
+
+.new-todo-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.new-todo-wrapper * {
+  max-width: 75%;
+  margin: 1rem 0;
+  font-size: 1.5rem;
+  font-family: inherit;
+}
+
+.new-todo-title {
+  margin: 1rem 0;
+  font-size: 1.5rem;
+}
+
+/* MODAL BOX */
+.modal {
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: #000a;
+}
+
+.modal-content {
+  width: 360px;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  font-size: 1.5rem;
+  background-color: #eee;
+}
+
+.modal-content strong {
+  text-transform: uppercase;
+}
+
+.modal-close-btn {
+  float: right;
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
+}
