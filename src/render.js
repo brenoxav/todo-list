@@ -13,10 +13,11 @@ let renderTodos;
 storage.checkLocalStorage();
 const { projects } = storage;
 
+const main = document.querySelector('main');
+main.classList.add('main');
+
 const render = (project = {}) => {
   storage.updateLocalStorage();
-  const main = document.querySelector('main');
-  main.classList.add('main');
 
   main.innerHTML = '';
 
@@ -93,6 +94,23 @@ class TodoForm {
     <option value="high" ${highSelected}>high</option>
     `;
 
+    // MODAL BOX
+    const modal = document.createElement('div');
+    modal.classList.add('modal', 'hidden');
+    const modalContent = document.createElement('div');
+    modalContent.classList.add('modal-content');
+    const modalCloseBtn = document.createElement('span');
+    modalCloseBtn.classList.add('modal-close-btn');
+    modalCloseBtn.textContent = '✕';
+    modalCloseBtn.addEventListener('click', () => {
+      modal.classList.toggle('hidden');
+    });
+    const modalText = document.createElement('p');
+    modalContent.appendChild(modalCloseBtn);
+    modalContent.appendChild(modalText);
+    modal.appendChild(modalContent);
+    main.appendChild(modal);
+
     // SAVE BTN
     this.saveBtn = document.createElement('button');
     this.saveBtn.classList.add('save-todo-btn');
@@ -108,8 +126,8 @@ class TodoForm {
       // CHECK IF FIELD IS EMPTY
       const inputIsValid = Object.entries(newTodoObj).every((field) => {
         if (field[1] === '') {
-          // eslint-disable-next-line no-alert
-          alert(`The field ${field[0]} can't be empty!`);
+          modalText.innerHTML = `The <strong>${field[0]}</strong> field can't be empty!`;
+          modal.classList.toggle('hidden');
           return false;
         }
 

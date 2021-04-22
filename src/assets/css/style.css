@@ -326,6 +326,36 @@ table {
   font-size: 1.5rem;
 }
 
+/* MODAL BOX */
+.modal {
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: #000a;
+}
+
+.modal-content {
+  width: 360px;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  font-size: 1.5rem;
+  background-color: #eee;
+}
+
+.modal-content strong {
+  text-transform: uppercase;
+}
+
+.modal-close-btn {
+  float: right;
+  cursor: pointer;
+}
+
 .hidden {
   display: none;
 }
