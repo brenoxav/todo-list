@@ -1,5 +1,5 @@
 // import storage from '../src/storage';
-import { renderSideBar } from '../src/render';
+import { render, renderSideBar } from '../src/render';
 
 let projects = [
   {
@@ -32,35 +32,30 @@ let projects = [
   },
 ];
 
-const fakeLocalStorage = (function() {
-  let store = {};
 
-  return {
-    getItem: function(key) {
-      return store[key] || null;
-    },
-    setItem: function(key, value) {
-      store[key] = value.toString();
-    },
-    removeItem: function(key) {
-      delete store[key];
-    },
-    clear: function() {
-      store = {};
-    }
-  };
-})();
+render();
 
 describe('render projects list side bar', () => {
-  beforeAll(() => {
-    Object.defineProperty(window, 'localStorage', {
-      value: fakeLocalStorage,
-    });
+
+  const sideBar = document.querySelector('.side-bar');
+  
+  it('list projects in the sidebar', () => {
+    const projectsList = document.querySelectorAll('.project-btn');
+    expect(projectsList[0].textContent).toMatch(/todos/);
+    expect(projectsList[1].textContent).toMatch(/work/);
+    expect(projectsList[2].textContent).toMatch(/personal/);
   });
 
-  it('list projects in the sidebar', () => {
-    let sideBar = renderSideBar(projects);
-    expect(sideBar.classList).toContain('side-bar');
-  });
+  it('delete a project', () => {
+    // TODO needs work
+    const deleteBtn = document.querySelector('.project-delete-btn');
+    
+    deleteBtn.click();
+    
+    console.log(sideBar.innerHTML);
+    
+    expect(sideBar.innerHTML).toMatch(/personal/);
+  })
+  
 
 });

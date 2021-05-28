@@ -13,8 +13,10 @@ let renderTodos;
 storage.checkLocalStorage();
 const { projects } = storage;
 
-const main = document.querySelector('main');
+const main = document.createElement('main');
 main.classList.add('main');
+const body = document.querySelector('body');
+body.appendChild(main);
 
 const render = (project = {}) => {
   storage.updateLocalStorage();
@@ -254,6 +256,7 @@ renderSideBar = (projects) => {
       projectDeleteBtn.textContent = ' X ';
       projectDeleteBtn.addEventListener('click', (event) => {
         event.stopPropagation();
+        console.log('clicked');
         projects.splice(index, 1);
         render();
       });
