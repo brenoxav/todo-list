@@ -59,3 +59,23 @@ describe('render projects list side bar', () => {
   
 
 });
+
+describe('render todos', () => {
+  it('render default todos', () => {
+    const todoContainer = document.querySelector('.todo-list');
+    expect(todoContainer.innerHTML).toMatch(/Create GitHub Repo/);
+    expect(todoContainer.innerHTML).toMatch(/Configure Linters/);
+    expect(todoContainer.innerHTML).toMatch(/Submit Project for Review/);
+  });
+  const todoForm = document.querySelector('.new-todo-wrapper');
+  it('todo form is hidden', () => {
+    expect(todoForm.classList).toContain('hidden');
+  })
+  it('todo form is displayed', () => {
+    const formBtn = document.querySelector('.add-todo-btn');
+    
+    formBtn.click();
+    console.log(todoForm.outerHTML);
+    expect(todoForm.classList).toContain('hidden');
+  })
+})
