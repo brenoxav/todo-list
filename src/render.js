@@ -299,4 +299,4 @@ renderSideBar = (projects) => {
   return sideBar;
 };
 
-export default render;
+export { render, renderSideBar };
