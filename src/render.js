@@ -301,4 +301,4 @@ renderSideBar = (projects) => {
   return sideBar;
 };
 
-export { render, renderSideBar };
+export { render, renderSideBar, renderTodos };
