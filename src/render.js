@@ -7,8 +7,8 @@ const getDateString = (date) => {
   return date.toJSON().slice(0, 10);
 };
 
-let renderSideBar;
-let renderTodos;
+// let renderSideBar;
+// let renderTodos;
 
 storage.checkLocalStorage();
 const { projects } = storage;
@@ -28,14 +28,14 @@ const render = (project = {}) => {
 
   main.appendChild(header);
 
-  const sideBar = renderSideBar(projects);
+  const sideBar = renderSideBar(projects);// eslint-disable-line no-use-before-define
   main.appendChild(sideBar);
 
   let todosContainer;
   if (project instanceof Project) {
-    todosContainer = renderTodos(project);
+    todosContainer = renderTodos(project);// eslint-disable-line no-use-before-define
   } else {
-    todosContainer = renderTodos(storage.defaultProject);
+    todosContainer = renderTodos(storage.defaultProject);// eslint-disable-line no-use-before-define
   }
 
   main.appendChild(todosContainer);
@@ -156,7 +156,7 @@ class TodoForm {
   }
 }
 
-renderTodos = (project) => {
+const renderTodos = (project) => {
   const todosContainer = document.createElement('div');
   todosContainer.classList.add('todo-list');
   todosContainer.innerHTML = '';
@@ -235,7 +235,7 @@ renderTodos = (project) => {
 };
 
 // RENDER SIDEBAR
-renderSideBar = (projects) => {
+const renderSideBar = (projects) => {
   // CLEAR SIDEBAR TO RENDER UPDATED LIST
   const sideBar = document.createElement('div');
   sideBar.classList.add('side-bar');

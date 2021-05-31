@@ -4,6 +4,7 @@ import Todo from '../src/todo';
 
 const fs = require('fs');
 const path = require('path');
+
 const html = fs.readFileSync(path.resolve(__dirname, '../dist/index.html'), 'utf8');
 
 jest
@@ -84,7 +85,6 @@ describe('render projects list side bar', () => {
 
     expect(projects[projects.length - 1].name).toBe('new project');
   });
-
 });
 
 describe('render todos', () => {
