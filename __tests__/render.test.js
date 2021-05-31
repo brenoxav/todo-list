@@ -1,5 +1,4 @@
-// import storage from '../src/storage';
-import { render, renderSideBar , renderTodos} from '../src/render';
+import { renderSideBar, renderTodos } from '../src/render';
 import Project from '../src/project';
 import Todo from '../src/todo';
 
@@ -47,15 +46,9 @@ projects.forEach((project) => {
   project.todos = project.todos.map((todo) => new Todo(todo));
 });
 
-//render();
-
 describe('render projects list side bar', () => {
-
   beforeEach(() => {
     document.documentElement.innerHTML = html.toString();
-    // render();
-    // const sideBar = document.querySelector('.side-bar');
-    // console.log(`SIDEBAR RENDER ${sideBar.innerHTML}`);
     const sideBar = renderSideBar(projects);
     const main = document.createElement('main');
     main.classList.add('main');
@@ -65,7 +58,6 @@ describe('render projects list side bar', () => {
   });
 
   afterEach(() => {
-    // restore the original func after test
     jest.resetModules();
   });
 
@@ -77,31 +69,27 @@ describe('render projects list side bar', () => {
   });
 
   it('delete a project', () => {
-
     const deleteBtn = document.querySelector('.project-delete-btn');
-    
-    const numOfProjects = projects.length; 
+    const numOfProjects = projects.length;
     deleteBtn.click();
-    
+
     expect(projects.length).toBe(numOfProjects - 1);
-  })
+  });
 
   it('add a project', () => {
-    const saveBtn = document.querySelector('.save-project-btn'); 
+    const saveBtn = document.querySelector('.save-project-btn');
     const projectNameField = document.querySelector('.new-project-name');
     projectNameField.value = 'new project';
     saveBtn.click();
-    expect(projects[projects.length-1].name).toBe('new project');
-  })
+
+    expect(projects[projects.length - 1].name).toBe('new project');
+  });
 
 });
 
 describe('render todos', () => {
   beforeEach(() => {
     document.documentElement.innerHTML = html.toString();
-    
-    // const sideBar = renderSideBar(projects);
-    
     const todoContainer = renderTodos(projects[0]);
     const main = document.createElement('main');
     main.classList.add('main');
@@ -111,35 +99,21 @@ describe('render todos', () => {
   });
 
   afterEach(() => {
-    // restore the original func after test
     jest.resetModules();
   });
-  // test('render clicked project todos', () => {
-  //   const firstProjectBtn = document.querySelector('.project-btn');
-  //   firstProjectBtn.click();
-  //   const todoContainer = document.querySelector('.todo-list');
-  //   console.log('todos',todoContainer.outerHTML);
-
-  //   expect(todoContainer.innerHTML).toMatch(/Create GitHub Repo/);
-  //   expect(todoContainer.innerHTML).toMatch(/Configure Linters/);
-  //   expect(todoContainer.innerHTML).toMatch(/Submit Project for Review/);
-  // });
 
   it('list todos from a project', () => {
     const todoTitles = document.querySelectorAll('.todo-title');
-    
 
     expect(todoTitles[0].textContent).toMatch(/linters/);
     expect(todoTitles[1].textContent).toMatch(/tests/);
-  })
+  });
 
   it('delete todo', () => {
     const todoDeleteBtn = document.querySelector('.todo-delete-btn');
     const numOfTodos = projects[0].todos.length;
-    
     todoDeleteBtn.click();
 
     expect(projects[0].todos.length).toBe(numOfTodos - 1);
   });
-
 });

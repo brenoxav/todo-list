@@ -62,6 +62,13 @@ todo-list
   npm run start
   ```
 
+### Test
+
+- To test this project, run:
+```
+npm test
+```
+
 ## Authors
 
 👨‍💻 **Breno Xavier**
