@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --verbose --env=jsdom",
-    "watch-test": "jest --verbose --watch --env=jsdom",
+    "test-watch": "jest --verbose --watch --env=jsdom",
     "dev-watch": "webpack --watch --mode development",
     "dev": "webpack --mode development",
     "build": "webpack --mode production",

@@ -256,7 +256,6 @@ renderSideBar = (projects) => {
       projectDeleteBtn.textContent = ' X ';
       projectDeleteBtn.addEventListener('click', (event) => {
         event.stopPropagation();
-        console.log('clicked');
         projects.splice(index, 1);
         render();
       });
