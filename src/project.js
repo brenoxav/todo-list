@@ -13,10 +13,6 @@ class Project {
   deleteTodo(todoIndex) {
     this.todos.splice(todoIndex, 1);
   }
-
-  renameProject(name) {
-    this.name = name;
-  }
 }
 
 export default Project;

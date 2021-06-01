@@ -7,14 +7,16 @@ const getDateString = (date) => {
   return date.toJSON().slice(0, 10);
 };
 
-let renderSideBar;
-let renderTodos;
+// let renderSideBar;
+// let renderTodos;
 
 storage.checkLocalStorage();
 const { projects } = storage;
 
-const main = document.querySelector('main');
+const main = document.createElement('main');
 main.classList.add('main');
+const body = document.querySelector('body');
+body.appendChild(main);
 
 const render = (project = {}) => {
   storage.updateLocalStorage();
@@ -26,14 +28,14 @@ const render = (project = {}) => {
 
   main.appendChild(header);
 
-  const sideBar = renderSideBar(projects);
+  const sideBar = renderSideBar(projects);// eslint-disable-line no-use-before-define
   main.appendChild(sideBar);
 
   let todosContainer;
   if (project instanceof Project) {
-    todosContainer = renderTodos(project);
+    todosContainer = renderTodos(project);// eslint-disable-line no-use-before-define
   } else {
-    todosContainer = renderTodos(storage.defaultProject);
+    todosContainer = renderTodos(storage.defaultProject);// eslint-disable-line no-use-before-define
   }
 
   main.appendChild(todosContainer);
@@ -154,7 +156,7 @@ class TodoForm {
   }
 }
 
-renderTodos = (project) => {
+const renderTodos = (project) => {
   const todosContainer = document.createElement('div');
   todosContainer.classList.add('todo-list');
   todosContainer.innerHTML = '';
@@ -233,7 +235,7 @@ renderTodos = (project) => {
 };
 
 // RENDER SIDEBAR
-renderSideBar = (projects) => {
+const renderSideBar = (projects) => {
   // CLEAR SIDEBAR TO RENDER UPDATED LIST
   const sideBar = document.createElement('div');
   sideBar.classList.add('side-bar');
@@ -275,9 +277,10 @@ renderSideBar = (projects) => {
   saveBtn.classList.add('save-project-btn');
   saveBtn.textContent = 'save';
   saveBtn.addEventListener('click', () => {
-    projects.push(new Project(inputField.value));
-
-    render(projects[projects.length - 1]);
+    if (inputField.value !== '') {
+      projects.push(new Project(inputField.value));
+      render(projects[projects.length - 1]);
+    }
   });
 
   newProjectForm.appendChild(inputField);
@@ -299,4 +302,4 @@ renderSideBar = (projects) => {
   return sideBar;
 };
 
-export default render;
+export { render, renderSideBar, renderTodos };
