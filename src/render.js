@@ -277,9 +277,10 @@ const renderSideBar = (projects) => {
   saveBtn.classList.add('save-project-btn');
   saveBtn.textContent = 'save';
   saveBtn.addEventListener('click', () => {
-    projects.push(new Project(inputField.value));
-
-    render(projects[projects.length - 1]);
+    if (inputField.value !== '') {
+      projects.push(new Project(inputField.value));
+      render(projects[projects.length - 1]);
+    }
   });
 
   newProjectForm.appendChild(inputField);

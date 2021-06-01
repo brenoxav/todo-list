@@ -81,9 +81,21 @@ describe('render projects list side bar', () => {
     const saveBtn = document.querySelector('.save-project-btn');
     const projectNameField = document.querySelector('.new-project-name');
     projectNameField.value = 'new project';
+    const numOfProjects = projects.length;
     saveBtn.click();
 
     expect(projects[projects.length - 1].name).toBe('new project');
+    expect(projects.length).toBe(numOfProjects + 1);
+  });
+
+  it('invalid project name fail', () => {
+    const saveBtn = document.querySelector('.save-project-btn');
+    const projectNameField = document.querySelector('.new-project-name');
+    projectNameField.value = '';
+    const numOfProjects = projects.length;
+    saveBtn.click();
+
+    expect(projects.length).not.toBe(numOfProjects + 1);
   });
 });
 
@@ -107,6 +119,72 @@ describe('render todos', () => {
 
     expect(todoTitles[0].textContent).toMatch(/linters/);
     expect(todoTitles[1].textContent).toMatch(/tests/);
+  });
+
+  it('add todo', () => {
+    const titleFields = document.querySelectorAll('.new-todo-title');
+    const descriptionFields = document.querySelectorAll('.new-todo-description');
+    const titleFieldLast = titleFields[titleFields.length - 1];
+    const descriptionFieldLast = descriptionFields[descriptionFields.length - 1];
+
+    const todoSaveBtns = document.querySelectorAll('.save-todo-btn');
+    const todoSaveBtnLast = todoSaveBtns[todoSaveBtns.length - 1];
+
+    titleFieldLast.value = 'new todo';
+    descriptionFieldLast.value = 'description of new';
+
+    todoSaveBtnLast.click();
+    const numOfTodos = projects[0].todos.length;
+    expect(projects[0].todos[numOfTodos - 1].title).toMatch(/new todo/);
+  });
+
+  it('add todo fails with invalid data', () => {
+    const titleFields = document.querySelectorAll('.new-todo-title');
+    const descriptionFields = document.querySelectorAll('.new-todo-description');
+    const titleFieldLast = titleFields[titleFields.length - 1];
+    const descriptionFieldLast = descriptionFields[descriptionFields.length - 1];
+
+    const todoSaveBtns = document.querySelectorAll('.save-todo-btn');
+    const todoSaveBtnLast = todoSaveBtns[todoSaveBtns.length - 1];
+
+    titleFieldLast.value = 'failing todo';
+    descriptionFieldLast.value = '';
+
+    todoSaveBtnLast.click();
+    const numOfTodos = projects[0].todos.length;
+    expect(projects[0].todos[numOfTodos - 1].title).not.toMatch(/failing todo/);
+  });
+
+  it('edit todo', () => {
+    const titleField = document.querySelector('.new-todo-title');
+    const descriptionField = document.querySelector('.new-todo-description');
+    const dueDateField = document.querySelector('.new-todo-due-date');
+    const priorityField = document.querySelector('.new-todo-priority');
+    const todoSaveBtn = document.querySelector('.save-todo-btn');
+
+    titleField.value = 'new todo';
+    descriptionField.value = 'description of new';
+    dueDateField.value = '2020-09-05';
+    priorityField.value = 'low';
+    todoSaveBtn.click();
+
+    expect(projects[0].todos[0].title).toMatch(/new todo/);
+  });
+
+  it('edit todo fails with invalid data', () => {
+    const titleField = document.querySelector('.new-todo-title');
+    const descriptionField = document.querySelector('.new-todo-description');
+    const dueDateField = document.querySelector('.new-todo-due-date');
+    const priorityField = document.querySelector('.new-todo-priority');
+    const todoSaveBtn = document.querySelector('.save-todo-btn');
+
+    titleField.value = 'todo 2';
+    descriptionField.value = '';
+    dueDateField.value = '2020-09-05';
+    priorityField.value = 'low';
+    todoSaveBtn.click();
+
+    expect(projects[0].todos[0].title).not.toMatch(/todo 2/);
   });
 
   it('delete todo', () => {
